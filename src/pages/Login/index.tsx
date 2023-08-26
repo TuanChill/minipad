@@ -10,7 +10,7 @@ import { signInWithGg } from "../../firebase/access";
 import { auth } from "../../firebase/config";
 import { UserSchema } from "../../configs/UserSchema";
 import "./index.css";
-import { setAccessToken } from "../../stores/TokenLocal";
+import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
 
 export default function Login() {
   const formik = useFormik({
@@ -24,11 +24,15 @@ export default function Login() {
           signInWithEmailAndPassword(auth, valid.email, valid.password)
             .then((userCredential) => {
               const user = userCredential.user
-              setAccessToken(user.accessToken);
+              const accessToken = user?.stsTokenManager.accessToken;
+              const refreshToken = user?.stsTokenManager.refreshToken;
+              setAccessToken(accessToken);
+              setRefreshToken(refreshToken);
+              window.location.reload();
             })
             .catch((err) => {
               const errMessage = err.message;
-              messageError(errMessage);
+              messageError("Tài khoản/Mật khẩu không đúng");
             })
         })
         .catch((err) => {
