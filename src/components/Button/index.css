@@ -1,0 +1,10 @@
+.button {
+  @apply inline-flex items-center justify-center;
+  @apply border border-gray-300 shadow-sm rounded-md bg-white;
+  @apply hover:bg-gray-50 px-2 py-1 focus:outline-none focus:ring-offset-2 focus:border-blue-500;
+}
+
+.button.primary {
+  @apply text-black;
+  @apply hover:opacity-90;
+}
