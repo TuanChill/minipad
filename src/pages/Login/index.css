@@ -1,0 +1,16 @@
+.wrapper {
+    @apply max-w-7xl h-screen flex flex-col items-center m-auto justify-center
+}
+
+.form-container {
+    @apply min-w-[300px] flex flex-col gap-4
+}
+
+.login-social {
+    @apply pb-8 border-gray-300 border-b-[1px]
+}
+
+.btn-submit {
+    @apply w-full text-primary border-primary;
+    @apply hover:opacity-60
+}
