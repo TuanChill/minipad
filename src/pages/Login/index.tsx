@@ -1,19 +1,16 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { Button } from "../../components/Button";
 import InputControl from "../../components/Controls/Input";
 import { GoogleIcon } from "../../components/Icons";
-import { messageSuccess, messageError } from "../../components/Message";
+import { messageError } from "../../components/Message";
+import { signInWithGg } from "../../firebase/access";
+import { auth } from "../../firebase/config";
+import { UserSchema } from "../../configs/UserSchema";
 import "./index.css";
-import { GgProvider, auth } from "../../firebase/config";
-import { setToken } from "../../stores/TokenLocal";
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().required().email(),
-  password: Yup.string().required().min(6).max(30),
-});
+import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
 
 export default function Login() {
   const formik = useFormik({
@@ -22,16 +19,20 @@ export default function Login() {
       password: "",
     },
     onSubmit: (values) => {
-      LoginSchema.validate(values, { abortEarly: false })
+      UserSchema.validate(values, { abortEarly: false })
         .then((valid) => {
-          messageSuccess("Đã gửi thông tin");
           signInWithEmailAndPassword(auth, valid.email, valid.password)
-            .then((user) => {
-              console.log(user);
+            .then((userCredential) => {
+              const user = userCredential.user
+              const accessToken = user?.stsTokenManager.accessToken;
+              const refreshToken = user?.stsTokenManager.refreshToken;
+              setAccessToken(accessToken);
+              setRefreshToken(refreshToken);
+              window.location.reload();
             })
             .catch((err) => {
               const errMessage = err.message;
-              messageError(errMessage);
+              messageError("Tài khoản/Mật khẩu không đúng");
             })
         })
         .catch((err) => {
@@ -52,25 +53,10 @@ export default function Login() {
     },
   });
 
-  const signInWithGg = async () => {
-    await signInWithPopup(auth, GgProvider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        setToken(token);
-        const user = result.user;
-        console.log(user);
-      })
-      .catch((err) => {
-        const errMessage = err.message;
-        messageError(errMessage);
-        const credential = GoogleAuthProvider.credentialFromError(err);
-      });
-  } 
-
+  
   return (
     <div className="wrapper">
-      <h1 className="text-5xl text-center font-bold mb-8">Đăng nhập</h1>
+      <h1 className="text-5xl text-center font-bold mb-8">Đăng Nhập</h1>
       <form className="form-container">
         <div className="login-social">
           <Button
@@ -89,7 +75,7 @@ export default function Login() {
         />
         <InputControl
           name="password"
-          placeholder="Password"
+          placeholder="Mật Khẩu"
           type="password"
           value={formik.values.password}
           error={formik.errors.password}

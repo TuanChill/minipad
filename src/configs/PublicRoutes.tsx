@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { getToken } from '../stores/TokenLocal'
+import { getAccessToken } from '../stores/TokenLocal'
 
 const PublicRoutes = () => {
-    const token = getToken();
+    const token = getAccessToken();
 
     return (
         !token ? <Outlet /> : <Navigate to="/" />
