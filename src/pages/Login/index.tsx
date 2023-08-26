@@ -1,10 +1,14 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+
 import { Button } from "../../components/Button";
 import InputControl from "../../components/Controls/Input";
 import { GoogleIcon } from "../../components/Icons";
+import { messageSuccess, messageError } from "../../components/Message";
 import "./index.css";
-import { messageSuccess } from "../../components/Message";
+import { GgProvider, auth } from "../../firebase/config";
+import { setToken } from "../../stores/TokenLocal";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required().email(),
@@ -18,36 +22,62 @@ export default function Login() {
       password: "",
     },
     onSubmit: (values) => {
-      LoginSchema.validate(values, {abortEarly: false})
+      LoginSchema.validate(values, { abortEarly: false })
         .then((valid) => {
-          messageSuccess("Đã gửi thông tin")
+          messageSuccess("Đã gửi thông tin");
+          signInWithEmailAndPassword(auth, valid.email, valid.password)
+            .then((user) => {
+              console.log(user);
+            })
+            .catch((err) => {
+              const errMessage = err.message;
+              messageError(errMessage);
+            })
         })
-        .catch((err)=> {
-          if (!err.inner.length) return 
+        .catch((err) => {
+          if (!err.inner.length) return;
 
           const errors = err.inner as Yup.ValidationError[];
-          const errorMessages = {email: "", password: "", }
+          const errorMessages = { email: "", password: "" };
 
-          errors.forEach(error => {
+          errors.forEach((error) => {
             if (!error.message || !error.path) return;
 
-            errorMessages[error.path as keyof typeof errorMessages] = error.message
-          })
+            errorMessages[error.path as keyof typeof errorMessages] =
+              error.message;
+          });
 
-          formik.setErrors(errorMessages)
-        })
+          formik.setErrors(errorMessages);
+        });
     },
   });
+
+  const signInWithGg = async () => {
+    await signInWithPopup(auth, GgProvider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        setToken(token);
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((err) => {
+        const errMessage = err.message;
+        messageError(errMessage);
+        const credential = GoogleAuthProvider.credentialFromError(err);
+      });
+  } 
 
   return (
     <div className="wrapper">
       <h1 className="text-5xl text-center font-bold mb-8">Đăng nhập</h1>
-      <form className="form-container" onSubmit={formik.handleSubmit}>
+      <form className="form-container">
         <div className="login-social">
           <Button
             iconLeft={<GoogleIcon />}
             text="Đăng nhập với Google"
             className="w-full font-semibold"
+            onClick={signInWithGg}
           />
         </div>
         <InputControl
@@ -65,7 +95,12 @@ export default function Login() {
           error={formik.errors.password}
           onChange={formik.handleChange}
         />
-        <Button text="Đăng nhập" type="submit" className="btn-submit"/>
+        <Button
+          text="Đăng nhập"
+          type="submit"
+          className="btn-submit"
+          onClick={formik.handleSubmit}
+        />
         <button className="underline text-left text-sm">Quên mật khẩu?</button>
       </form>
     </div>

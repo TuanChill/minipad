@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import { getToken } from '../stores/TokenLocal'
 
 const PublicRoutes = () => {
-    const token = localStorage.getItem('access_token') || false;
+    const token = getToken();
 
     return (
         !token ? <Outlet /> : <Navigate to="/" />
