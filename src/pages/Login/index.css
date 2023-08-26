@@ -1,9 +1,9 @@
 .wrapper {
-    @apply max-w-7xl h-screen flex flex-col items-center m-auto justify-center
+    @apply max-w-7xl h-screen flex flex-col items-center m-auto justify-center w-fit
 }
 
 .form-container {
-    @apply min-w-[300px] flex flex-col gap-4
+    @apply min-w-[300px] flex flex-col gap-4 w-full
 }
 
 .login-social {
