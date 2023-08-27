@@ -11,6 +11,7 @@ import { auth } from "../../firebase/config";
 import { UserSchema } from "../../configs/UserSchema";
 import "./index.css";
 import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const formik = useFormik({
@@ -22,16 +23,17 @@ export default function Login() {
       UserSchema.validate(values, { abortEarly: false })
         .then((valid) => {
           signInWithEmailAndPassword(auth, valid.email, valid.password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
               const user = userCredential.user
-              const accessToken = user?.stsTokenManager.accessToken;
-              const refreshToken = user?.stsTokenManager.refreshToken;
+              const accessToken = await userCredential.user.getIdToken();
+              const refreshToken = user?.refreshToken;
               setAccessToken(accessToken);
               setRefreshToken(refreshToken);
               window.location.reload();
             })
             .catch((err) => {
               const errMessage = err.message;
+              console.log(errMessage);
               messageError("Tài khoản/Mật khẩu không đúng");
             })
         })
@@ -87,7 +89,15 @@ export default function Login() {
           className="btn-submit"
           onClick={formik.handleSubmit}
         />
-        <button className="underline text-left text-sm">Quên mật khẩu?</button>
+        <div className="flex justify-between">
+          <Link to="/forgotPassword">
+            <button className="underline text-left text-sm text-red-500">Quên mật khẩu?</button>
+          </Link>
+          <Link to="/register">
+            <button className="underline text-left text-sm">Bạn chưa có tài khoản</button>
+          </Link>
+
+        </div>
       </form>
     </div>
   );
