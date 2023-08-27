@@ -28,10 +28,10 @@ export default function Register() {
       UserSchema.validate(values, { abortEarly: false })
         .then((valid) => {
           createUserWithEmailAndPassword(auth, valid.email, valid.password)
-            .then((userCredential) => {
-              const user = userCredential.user;
-              const accessToken = user?.stsTokenManager.accessToken;
-              const refreshToken = user?.stsTokenManager.refreshToken;
+            .then(async (userCredential) => {
+              const user = userCredential.user
+              const accessToken = await userCredential.user.getIdToken();
+              const refreshToken = user?.refreshToken;
               setAccessToken(accessToken);
               setRefreshToken(refreshToken);
               window.location.reload()
