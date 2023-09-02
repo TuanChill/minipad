@@ -1,0 +1,7 @@
+#layoutSidenav {
+    @apply flex flex-row h-screen;
+}
+
+.main {
+    @apply flex-1;
+}

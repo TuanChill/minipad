@@ -9,9 +9,9 @@ import { messageError } from "../../components/Message";
 import { signInWithGg } from "../../firebase/access";
 import { auth } from "../../firebase/config";
 import { UserSchema } from "../../configs/UserSchema";
-import "./index.css";
 import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
 import { Link } from "react-router-dom";
+import "./index.css";
 
 export default function Login() {
   const formik = useFormik({

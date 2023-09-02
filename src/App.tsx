@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import PrivateRoutes from "./configs/PrivateRoutes";
 import PublicRoutes from "./configs/PublicRoutes";
-import DefaultLayout from "./layouts/DefaultLayout";
+import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import "./index.css"
+import 'remixicon/fonts/remixicon.css'
 
 function App() {
   return (
