@@ -12,7 +12,6 @@ export const signInWithGg = async () => {
       const refreshToken = user?.refreshToken;
       setAccessToken(accessToken);
       setRefreshToken(refreshToken);
-      window.location.reload();
     })
     .catch((err) => {
       const errMessage = err.message;

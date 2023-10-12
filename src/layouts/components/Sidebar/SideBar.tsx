@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import UserInfo from "../../../components/UserInfo";
 import "./index.css";
 
 export default function SideBar() {
@@ -40,7 +41,9 @@ export default function SideBar() {
       style={{ width: sidebarWidth }}
       onMouseDown={(e) => e.preventDefault()}
     >
-      <div className="app-sidebar-content" />
+      <div className="app-sidebar-content" >
+        <UserInfo />
+      </div>
       <div className="app-sidebar-resizer" onMouseDown={startResizing} />
     </div>
   );

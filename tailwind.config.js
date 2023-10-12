@@ -6,6 +6,7 @@ export default {
     extend: {
       colors: {
         primary: "rgb(235, 87, 87)",
+        sidebar_hover: "rgba(55,53,47,0.08)"
       }
     },
   },

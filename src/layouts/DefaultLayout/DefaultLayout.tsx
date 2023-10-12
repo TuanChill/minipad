@@ -10,7 +10,9 @@ export default function DefaultLayout() {
         <SideBar />
         <div className="main">
           <Header />
-          <Outlet />
+          <div className="content">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>
