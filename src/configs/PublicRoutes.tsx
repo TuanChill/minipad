@@ -1,11 +1,13 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { getAccessToken } from '../stores/TokenLocal'
+import {useContext} from "react";
+import { AuthContext } from '../context/AuthProvider';
 
 const PublicRoutes = () => {
-    const token = getAccessToken();
+    const auth = useContext(AuthContext);
+    console.log(auth)
 
     return (
-        !token ? <Outlet /> : <Navigate to="/" />
+        !auth?.user ? <Outlet /> : <Navigate to="/" />
     )
 }
 

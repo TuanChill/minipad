@@ -3,14 +3,14 @@ import joinClasses from "../../utils/joinClasses.ts";
 import "./index.css";
 
 type Props = {
-    text: string,
+    text?: string,
     onClick?: () => void,
     className?: string,
     primary?: boolean,
     secondary?: boolean
     disabled?: boolean,
-    iconLeft?: JSX.Element,
-    iconRight?: JSX.Element,
+    iconLeft?: JSX.Element| string,
+    iconRight?: JSX.Element| string,
     type?: "button" | "submit" | "reset",
     otherProps?: [HTMLAttributes<HTMLButtonElement>],
 }
