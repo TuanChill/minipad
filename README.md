@@ -1,27 +1,85 @@
-# React + TypeScript + Vite
+## ⛩️ Project Info
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## NotePad - Online Note
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Introduction:
+   App to note everything
 
-## Expanding the ESLint configuration
+### Related web:
+    1.Notion: https://www.notion.so/
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🎉 Features
 
-- Configure the top-level `parserOptions` property like this:
+- **React** - A JavaScript library for building user interfaces.
+- **TypeScript** - A typed superset of JavaScript that compiles to plain JavaScript.
+- **Tailwind CSS** - A utility-first CSS framework.
+- **Tailwind Prettier Plugin** - A Prettier plugin for formatting Tailwind CSS classes.
+- **ESLint** - A pluggable linting utility for JavaScript and TypeScript.
+- **PostCSS** - A tool for transforming CSS with JavaScript.
+- **Autoprefixer** - A PostCSS plugin to parse CSS and add vendor prefixes.
+- **Firebase** - A Nosql database.
+- **remixicon** - A icon library.
+- **Tiptap** - A rich text editor.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## ⚙️ Prerequisites
+
+Make sure you have the following installed on your development machine:
+
+- Node.js (version 18.17 or later)
+- Install: https://nodejs.org/en/download
+
+## 🚀 Getting Started
+
+Follow these steps to get started project:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/TuanChill/notion--.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd notion--
+   ```
+
+3. Install the dependencies:
+
+   ```bash
+   yarn
+   ```
+
+4. Start the development server:
+
+   ```bash
+   yarn dev
+   ```
+
+## 📜 Available Scripts
+
+- yarn dev - Starts the development server.
+- yarn start - Starts the production mode.
+- npm build - Builds the production-ready code.
+
+## 📂 Project Structure
+
+The project structure follows a standard React application layout:
+
+```python
+project/
+  ├── node_modules/      # Project dependencies
+  ├── public/            # Public assets
+  ├── src/               # Application source code
+  │   ├── components/    # React components
+  │   ├── App.tsx        # Application entry point
+  │   ├── index.css      # Global css
+  │   └── index.tsx      # Main rendering file
+  ├── .eslintrc.json     # ESLint configuration
+  ├── index.html         # HTML entry point
+  ├── postcss.config.js  # PostCSS configuration
+  ├── tailwind.config.js # Tailwind CSS configuration
+  ├── tsconfig.json      # TypeScript configuration
+  └── vite.config.ts     # Vite configuration 
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

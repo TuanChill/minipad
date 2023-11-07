@@ -6,12 +6,12 @@ import { Button } from "../../components/Button";
 import InputControl from "../../components/Controls/Input";
 import { GoogleIcon } from "../../components/Icons";
 import { messageError } from "../../components/Message";
-import { signInWithGg } from "../../firebase/access";
 import { auth } from "../../firebase/config";
 import { UserSchema } from "../../configs/UserSchema";
 import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
 import { Link, useNavigate } from "react-router-dom";
 import "./index.css";
+import { signInWithGg } from "../../services/sign";
 
 export default function Login() {
   const navigate = useNavigate();
