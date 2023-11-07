@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    overflow: hidden;
+}
+
+@layer components {
+    .item-sidebar_hover {
+        @apply hover:bg-sidebar_hover;
+    }
+}

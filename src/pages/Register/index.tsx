@@ -8,9 +8,9 @@ import { GoogleIcon } from "../../components/Icons";
 import { auth } from "../../firebase/config";
 import { messageError } from "../../components/Message";
 import { UserSchema } from "../../configs/UserSchema";
-import { signInWithGg } from "../../firebase/access";
 import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
 import { Link } from "react-router-dom";
+import { signInWithGg } from "../../services/sign";
 
 export default function Register() {
   const formik = useFormik({

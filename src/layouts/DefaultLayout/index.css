@@ -1,0 +1,11 @@
+#layoutSidenav {
+    @apply flex flex-row h-screen overflow-hidden;
+}
+
+.main {
+    @apply flex-1 relative;
+}
+
+.content {
+    @apply pt-14 overflow-y-scroll h-screen relative z-10;
+}
