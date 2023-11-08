@@ -1,5 +1,5 @@
-import TailwindForm from "@tailwindcss/forms";
-/** @type {import('tailwindcss').Config} */
+/* eslint-disable no-undef */
+
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -17,6 +17,7 @@ export default {
     },
   },
   plugins: [
-    TailwindForm,
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
   ],
 };

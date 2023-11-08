@@ -1,58 +1,52 @@
-import {useEffect, useState, createContext} from 'react'
-import { useNavigate } from 'react-router-dom'
-import { auth } from '../firebase/config';
+import { onAuthStateChanged } from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import { auth } from "../firebase/config";
 
-export interface IAuthenUser {
-  email: string | null;
-  displayName: string | null;
+interface IAuthenUser {
   uid: string;
+  email?: string | null;
   photoURL: string | null;
+  displayName: string | null;
 }
 
 interface IAuthenContext {
-  user: IAuthenUser | null ;
+  user: IAuthenUser | null;
 }
 
-interface Props {
+export const AuthenContext = createContext<IAuthenContext>({
+  user: null,
+});
+
+interface AuthenProviderProps {
   children: JSX.Element | JSX.Element[];
 }
 
-export const AuthContext = createContext<IAuthenContext>({
-  user: null
-});
+export default function AuthProvider({ children }: AuthenProviderProps) {
+  const [authInfo, setAuthInfo] = useState<IAuthenContext>({
+    user: null,
+  });
 
-export default function AuthProvider({children} : Props) {
-  const [user, setUser] = useState<IAuthenContext>({
-    user: null
-  })
-  const navigate = useNavigate();
   useEffect(() => {
-    const unsubscribed = auth.onAuthStateChanged( (userInfo) => {
-      console.log(userInfo)
-      if(userInfo) {
-        setUser({
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+        setAuthInfo({
           user: {
-            displayName: userInfo?.displayName ?? null,
-            email: userInfo?.email ?? null,
-            uid: userInfo?.uid ?? '',
-            photoURL: userInfo?.photoURL ?? null
-          }
-        })
-      } else {
-        setUser({
-          user: null
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            uid: user.uid,
+          },
         });
-        navigate("/login");
+      } else {
+        setAuthInfo({
+          user: null,
+        });
       }
-    })
-  
-    return () => {
-      unsubscribed()
-    }
-  }, [])
+    });
+    return unsubscribe();
+  }, []);
   return (
-    <AuthContext.Provider value={user}>
-      {children}
-    </AuthContext.Provider>
-  )
+    <AuthenContext.Provider value={authInfo}>{children}</AuthenContext.Provider>
+  );
 }
