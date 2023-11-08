@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthProvider";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function UserInfo() {
-  const {user} = useContext(AuthContext);
+  const {user} = useAuth();
 
   return (
     <div className="flex items-center justify-between px-4 h-h_header item-sidebar_hover shadow-lg">
