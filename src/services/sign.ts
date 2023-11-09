@@ -1,20 +1,20 @@
 import {
-  GoogleAuthProvider,
-  browserSessionPersistence,
   createUserWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
-  setPersistence,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { GgProvider, auth } from "../firebase/config";
-import { messageError } from "../components/Message";
+import { messageError, messageSuccess } from "../components/Message";
+import { setAuthCache } from "../containers/localAuth";
 
 export const signIn = (email: string, password: string) => {
-  return setPersistence(auth, browserSessionPersistence)
-    .then(() => {
-      signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(auth, email, password)
+    .then((result) => {
+      const { user } = result;
+      setAuthCache(user);
+      messageSuccess("Đăng nhập thành công");
     })
     .catch((err) => {
       messageError(err.message);
@@ -23,11 +23,10 @@ export const signIn = (email: string, password: string) => {
 
 export const signInWithGg = async () => {
   return signInWithPopup(auth, GgProvider)
-    .then(async (result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      console.log(credential);
+    .then((result) => {
       const { user } = result;
-      console.log(user);
+      setAuthCache(user);
+      messageSuccess("Đăng nhập thành công");
     })
     .catch((err) => {
       messageError(err.message);
@@ -35,9 +34,15 @@ export const signInWithGg = async () => {
 };
 
 export const signUp = (email: string, password: string) => {
-  return setPersistence(auth, browserSessionPersistence)
-    .then(() => createUserWithEmailAndPassword(auth, email, password))
-    .catch((err) => messageError(err.message));
+  return createUserWithEmailAndPassword(auth, email, password)
+    .then((result) => {
+      const { user } = result;
+      setAuthCache(user);
+      messageSuccess("Đăng ký thành công");
+    })
+    .catch((err) => {
+      messageError(err.message);
+    });
 };
 
 export const verifyEmail = async () => {

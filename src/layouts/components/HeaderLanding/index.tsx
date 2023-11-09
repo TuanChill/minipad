@@ -1,5 +1,5 @@
 export default function HeaderLanding() {
   return (
-    <div>index</div>
+    <div>Heading</div>
   )
 }

@@ -1,17 +1,13 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { Button } from "../../components/Button";
 import InputControl from "../../components/Controls/Input";
 import { GoogleIcon } from "../../components/Icons";
-import { messageError } from "../../components/Message";
-import { auth } from "../../firebase/config";
-import { UserSchema } from "../../configs/UserSchema";
-import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
+import { UserSchema } from "../../containers/UserSchema";
 import { Link, useNavigate } from "react-router-dom";
+import { signIn, signInWithGg } from "../../services/sign";
 import "./index.css";
-import { signInWithGg } from "../../services/sign";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,20 +19,7 @@ export default function Login() {
     onSubmit: (values) => {
       UserSchema.validate(values, { abortEarly: false })
         .then((valid) => {
-          signInWithEmailAndPassword(auth, valid.email, valid.password)
-            .then(async (userCredential) => {
-              const user = userCredential.user
-              const accessToken = await userCredential.user.getIdToken();
-              const refreshToken = user?.refreshToken;
-              setAccessToken(accessToken);
-              setRefreshToken(refreshToken);
-              navigate("/")
-            })
-            .catch((err) => {
-              const errMessage = err.message;
-              console.log(errMessage);
-              messageError("Tài khoản/Mật khẩu không đúng");
-            })
+          signIn(valid.email, valid.password);
         })
         .catch((err) => {
           if (!err.inner.length) return;

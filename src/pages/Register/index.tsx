@@ -7,12 +7,12 @@ import InputControl from "../../components/Controls/Input";
 import { GoogleIcon } from "../../components/Icons";
 import { auth } from "../../firebase/config";
 import { messageError } from "../../components/Message";
-import { UserSchema } from "../../configs/UserSchema";
-import { setAccessToken, setRefreshToken } from "../../stores/TokenLocal";
-import { Link } from "react-router-dom";
+import { UserSchema } from "../../containers/UserSchema";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithGg } from "../../services/sign";
 
 export default function Register() {
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -30,11 +30,9 @@ export default function Register() {
           createUserWithEmailAndPassword(auth, valid.email, valid.password)
             .then(async (userCredential) => {
               const user = userCredential.user
-              const accessToken = await userCredential.user.getIdToken();
-              const refreshToken = user?.refreshToken;
-              setAccessToken(accessToken);
-              setRefreshToken(refreshToken);
-              window.location.reload()
+              if(user) {
+                navigate("/app/pad")
+              }
             })
             .catch(() => {
               messageError("Tài khoản đã tồn tại");

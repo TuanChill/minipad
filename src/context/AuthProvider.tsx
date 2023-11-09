@@ -1,8 +1,9 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/config";
+import { useNavigate } from "react-router-dom";
 
-interface IAuthenUser {
+export interface IAuthenUser {
   uid: string;
   email?: string | null;
   photoURL: string | null;
@@ -26,10 +27,12 @@ export default function AuthProvider({ children }: AuthenProviderProps) {
     user: null,
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user);
       if (user) {
-        console.log(user);
         setAuthInfo({
           user: {
             displayName: user.displayName,
@@ -38,13 +41,16 @@ export default function AuthProvider({ children }: AuthenProviderProps) {
             uid: user.uid,
           },
         });
+        navigate("/app/pad");
       } else {
         setAuthInfo({
           user: null,
         });
       }
     });
-    return unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, []);
   return (
     <AuthenContext.Provider value={authInfo}>{children}</AuthenContext.Provider>
