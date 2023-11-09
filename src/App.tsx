@@ -7,11 +7,11 @@ import Register from "./pages/Register";
 import LandingPage from "./pages/Landing";
 import AuthProvider from "./context/AuthProvider";
 import PrivateRoute from "./containers/PrivateRoute";
+import Pad from "./pages/Pad";
 import NotFound from "./pages/NotFound";
 
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
-import Pad from "./pages/Pad";
 
 function App() {
   return (
@@ -38,6 +38,7 @@ function App() {
             <Route index element={<NotFound />} />
           </Route>
           <Route path="/" element={<LandingPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </div>
