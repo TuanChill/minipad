@@ -1,6 +1,6 @@
 import {HTMLAttributes} from "react";
-import joinClasses from "../../utils/joinClasses.ts";
 import "./index.css";
+import { joinClasses } from "../../utils";
 
 type Props = {
     text?: string,

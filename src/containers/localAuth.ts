@@ -1,5 +1,5 @@
 import { IAuthenUser } from './../context/AuthProvider';
-import { getCacheJson, setCache } from "../utils/localCache"
+import { getCacheJson, rmCache, setCache } from "../utils/localCache"
 
 export const keyAuthInfo = "auth-info"
 
@@ -20,4 +20,8 @@ export const setAuthCache = (value: IUserAuthCache) => {
 
 export const getAuthCache = () => {
     return getCacheJson(keyAuthInfo);
+}
+
+export const rmAuthCache = () => {
+    rmCache(keyAuthInfo);
 }

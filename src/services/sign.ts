@@ -16,8 +16,8 @@ export const signIn = (email: string, password: string) => {
       setAuthCache(user);
       messageSuccess("Đăng nhập thành công");
     })
-    .catch((err) => {
-      messageError(err.message);
+    .catch(() => {
+      messageError("Tài khoản/Mật khẩu không đúng");
     });
 };
 
@@ -28,8 +28,8 @@ export const signInWithGg = async () => {
       setAuthCache(user);
       messageSuccess("Đăng nhập thành công");
     })
-    .catch((err) => {
-      messageError(err.message);
+    .catch(() => {
+      messageError("Tài khoản/Mật khẩu không đúng");
     });
 };
 
@@ -40,8 +40,8 @@ export const signUp = (email: string, password: string) => {
       setAuthCache(user);
       messageSuccess("Đăng ký thành công");
     })
-    .catch((err) => {
-      messageError(err.message);
+    .catch(() => {
+      messageError("Tài khoản đã tồn tại");
     });
 };
 

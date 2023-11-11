@@ -1,16 +1,14 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { Button } from "../../components/Button";
-import InputControl from "../../components/Controls/Input";
-import { GoogleIcon } from "../../components/Icons";
-import { UserSchema } from "../../containers/UserSchema";
-import { Link, useNavigate } from "react-router-dom";
-import { signIn, signInWithGg } from "../../services/sign";
-import "./index.css";
+import { Button } from "../../../components/Button";
+import InputControl from "../../../components/Controls/Input";
+import { GoogleIcon } from "../../../components/Icons";
+import { UserSchema } from "../../../containers/UserSchema";
+import { Link } from "react-router-dom";
+import { signIn, signInWithGg } from "../../../services/sign";
 
 export default function Login() {
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -39,7 +37,6 @@ export default function Login() {
     },
   });
 
-  
   return (
     <div className="wrapper">
       <h1 className="text-5xl text-center font-bold mb-8">Đăng Nhập</h1>
@@ -49,7 +46,7 @@ export default function Login() {
             iconLeft={<GoogleIcon />}
             text="Đăng nhập với Google"
             className="w-full font-semibold"
-            onClick={async() =>{await signInWithGg(); await navigate("/")}}
+            onClick={() => signInWithGg()}
           />
         </div>
         <InputControl
@@ -74,13 +71,16 @@ export default function Login() {
           onClick={formik.handleSubmit}
         />
         <div className="flex justify-between">
-          <Link to="/forgotPassword">
-            <button className="underline text-left text-sm text-red-500">Quên mật khẩu?</button>
+          <Link to="/forgot-password">
+            <button className="underline text-left text-sm text-red-500">
+              Quên mật khẩu?
+            </button>
           </Link>
           <Link to="/register">
-            <button className="underline text-left text-sm">Bạn chưa có tài khoản</button>
+            <button className="underline text-left text-sm">
+              Bạn chưa có tài khoản
+            </button>
           </Link>
-
         </div>
       </form>
     </div>

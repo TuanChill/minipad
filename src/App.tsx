@@ -1,14 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
-import LayoutClear from "./layouts/LayoutClear/LayoutClear";
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
-import Register from "./pages/Register";
+import Login from "./pages/auth/Login";
+import Logout from "./pages/auth/Logout";
+import Register from "./pages/auth/Register";
 import LandingPage from "./pages/Landing";
 import AuthProvider from "./context/AuthProvider";
 import PrivateRoute from "./containers/PrivateRoute";
 import Pad from "./pages/Pad";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import LayoutAuth from "./layouts/LayoutAuth";
 
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
@@ -18,10 +19,11 @@ function App() {
     <div>
       <AuthProvider>
         <Routes>
-          <Route element={<LayoutClear />}>
+          <Route element={<LayoutAuth />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
           </Route>
 
           <Route path="/app">

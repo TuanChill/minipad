@@ -7,6 +7,9 @@ export const getCacheJson = (key: string) => {
 }
 
 export const setCache = (key: string, value: unknown) => {
-    console.log(value)
     localStorage.setItem(key, JSON.stringify(value));
+}
+
+export const rmCache = (key: string) => {
+    localStorage.removeItem(key);
 }

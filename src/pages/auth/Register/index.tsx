@@ -1,18 +1,14 @@
 import { useFormik } from "formik";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import * as Yup from "yup";
 
-import { Button } from "../../components/Button";
-import InputControl from "../../components/Controls/Input";
-import { GoogleIcon } from "../../components/Icons";
-import { auth } from "../../firebase/config";
-import { messageError } from "../../components/Message";
-import { UserSchema } from "../../containers/UserSchema";
-import { Link, useNavigate } from "react-router-dom";
-import { signInWithGg } from "../../services/sign";
+import { Button } from "../../../components/Button";
+import InputControl from "../../../components/Controls/Input";
+import { GoogleIcon } from "../../../components/Icons";
+import { UserSchema } from "../../../containers/UserSchema";
+import { Link } from "react-router-dom";
+import { signInWithGg, signUp } from "../../../services/sign";
 
 export default function Register() {
-  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,16 +23,7 @@ export default function Register() {
 
       UserSchema.validate(values, { abortEarly: false })
         .then((valid) => {
-          createUserWithEmailAndPassword(auth, valid.email, valid.password)
-            .then(async (userCredential) => {
-              const user = userCredential.user
-              if(user) {
-                navigate("/app/pad")
-              }
-            })
-            .catch(() => {
-              messageError("Tài khoản đã tồn tại");
-            });
+          signUp(valid.email, valid.password);
         })
         .catch((err) => {
           if (!err.inner.length) return;

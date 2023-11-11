@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { getAuthCache } from "./localAuth";
+import { isEmptyObject } from "../utils";
 
 interface IPrivateRouteProps {
   children: JSX.Element | JSX.Element[];
@@ -8,10 +9,8 @@ interface IPrivateRouteProps {
 export default function PrivateRoute({ children }: IPrivateRouteProps) {
   const user = getAuthCache();
   console.log(user);
-
-  console.log(!user);
-
-  if (!user) {
+  
+  if (isEmptyObject(user)) {
     return <Navigate to="/login" replace />;
   }
 

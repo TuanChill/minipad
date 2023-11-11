@@ -1,5 +1,7 @@
 export default function HeaderLanding() {
   return (
-    <div>Heading</div>
+    <div className="w-full">
+      
+    </div>
   )
 }
