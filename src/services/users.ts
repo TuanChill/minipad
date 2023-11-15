@@ -1,4 +1,4 @@
-import { Timestamp, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 
@@ -8,11 +8,9 @@ export interface IUser {
     fullname: string
     email: string
     photoURL: string
-    address: string
-    searchID?: string
-    dateOfBirth: Timestamp
-    createdAt?: Timestamp
 }
+
+export const addUser =() => {};
 
 export const getUser = async (uid: string): Promise<IUser | null> => {
     const user = await getDoc(doc(db, "users", uid))

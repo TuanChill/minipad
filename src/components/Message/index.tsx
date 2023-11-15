@@ -29,7 +29,7 @@ const createMessage: CreateMessageFunc = (type, message) => {
   setTimeout(() => {
     root.unmount()
     container.remove()
-  }, 2000);
+  }, 4000);
 
 }
 

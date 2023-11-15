@@ -1,5 +1,5 @@
-import TailwindForm from "@tailwindcss/forms";
-/** @type {import('tailwindcss').Config} */
+/* eslint-disable no-undef */
+
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -13,10 +13,14 @@ export default {
       },
       height: {
         h_header: "50px"
+      },
+      fontFamily: {
+        "logo": "Agbalumo",
       }
     },
   },
   plugins: [
-    TailwindForm,
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
   ],
 };
