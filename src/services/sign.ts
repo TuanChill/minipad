@@ -1,4 +1,5 @@
 import {
+  confirmPasswordReset,
   createUserWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
@@ -8,6 +9,7 @@ import {
 import { GgProvider, auth } from "../firebase/config";
 import { messageError, messageSuccess } from "../components/Message";
 import { setAuthCache } from "../containers/localAuth";
+import { getUrlHost } from "../utils";
 
 export const signIn = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password)
@@ -50,5 +52,26 @@ export const verifyEmail = async () => {
 };
 
 export const sendResetPassword = (email: string) => {
-  return sendPasswordResetEmail(auth, email);
+  return sendPasswordResetEmail(auth, email, {
+    url: `'https://${getUrlHost()}/reset-password`
+  })
+    .then(() => {
+      messageSuccess("Vui lòng kiểm tra email của bạn!!");
+    })
+    .catch((err) => {
+      messageError("Đã có lỗi xảy ra, Vui lòng thử lại!!");
+      console.log(err.message)
+    })
 };
+
+export const resetPassword = (oobCode: string, newPassword: string) => {
+  return confirmPasswordReset(auth, oobCode, newPassword)
+    .then((res) => {
+      messageSuccess("Đổi mật khẩu thành công!!");
+      console.log(res)
+    })
+    .catch((err) => {
+      messageError("Đã có lỗi xảy ra, Vui lòng thử lại!!")
+      console.log(err);
+    })
+}

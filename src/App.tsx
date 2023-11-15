@@ -13,6 +13,7 @@ import LayoutAuth from "./layouts/LayoutAuth";
 
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
 
           <Route path="/app">

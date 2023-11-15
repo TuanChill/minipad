@@ -1,6 +1,9 @@
+@import url("/src/styles/font.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 *::-webkit-scrollbar {
     display: none;
@@ -9,7 +12,6 @@
 body {
     overflow: hidden;
 }
-
 
 @layer components {
     .item-sidebar_hover {

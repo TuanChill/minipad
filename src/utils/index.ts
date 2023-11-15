@@ -14,7 +14,7 @@ function isEmpty(obj: object) {
     return true
 }
 // distinguish {}-like empty objects from other objects
-export function isEmptyObject(value: object) {
+export const isEmptyObject = (value: object) => {
     if (value == null || value == undefined) {
       // null or undefined
       return false;
@@ -34,4 +34,8 @@ export function isEmptyObject(value: object) {
     }
   
     return isEmpty(value);
+}
+
+export const getUrlHost = (): string => {
+  return window.location.host;
 }

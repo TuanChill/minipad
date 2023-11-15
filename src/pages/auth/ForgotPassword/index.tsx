@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 
 import "../index.css"
 import { messageError } from "../../../components/Message";
+import { sendResetPassword } from "../../../services/sign";
 
 const emailSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,7 +23,7 @@ export default function ForgotPassword() {
     onSubmit: (values) => {
         emailSchema.validate(values, { abortEarly: false })
           .then((valid) => {
-            // signIn(valid.email, valid.password);
+            sendResetPassword(valid.email);
           })
           .catch((err) => {
             if (!err.inner.length) return;

@@ -13,7 +13,7 @@ export default function Header() {
       <nav className="flex gap-4">
         {navList.map((e) => {
           return(
-            <Link to={e.path} key={e.title} className="bg-slate-300 p-2 rounded-md">
+            <Link to={e.path} key={e.title} className="bg-slate-300 p-2 rounded-md font-semibold">
               {e.title}
             </Link>
           )

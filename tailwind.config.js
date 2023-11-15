@@ -13,6 +13,9 @@ export default {
       },
       height: {
         h_header: "50px"
+      },
+      fontFamily: {
+        "logo": "Agbalumo",
       }
     },
   },
