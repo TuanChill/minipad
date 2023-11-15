@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
 import Logo from "../../components/Logo";
 
-const navList = [
-  {path: "/", title: "Trang chủ"},
-  {path: "/app/pad", title: "Note Now"},
-]
+interface NavItem {
+    title: string;
+    path: string;
+}
 
-export default function Header() {
+interface IPropsHeader {
+    navList: NavItem[];
+    className?: string | null;
+} 
+
+export default function Header( {navList, className} : IPropsHeader) {
   return (
-    <div className="w-full bg-slate-50 flex items-center justify-between px-6 py-3 shadow-md">
+    <div className={`w-full bg-slate-50 flex items-center justify-between px-6 py-3 shadow-md ${className}`}>
       <Logo />
       <nav className="flex gap-4">
         {navList.map((e) => {

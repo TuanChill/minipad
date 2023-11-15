@@ -41,6 +41,7 @@ function App() {
             </Route>
             <Route index element={<NotFound />} />
           </Route>
+          
           <Route path="/" element={<LandingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
