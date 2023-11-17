@@ -1,0 +1,10 @@
+.title-section {
+  color: #29282f;
+  @apply text-3xl sm:text-4xl text-center font-extrabold;
+  text-shadow: 5px 5px #e3e3e3;
+}
+
+.main-box {
+    @apply py-12 max-w-main mx-auto mt-12;
+    @apply lg:h-[950px] sm:h-fit;
+}
