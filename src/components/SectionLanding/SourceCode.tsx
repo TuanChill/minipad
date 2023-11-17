@@ -13,7 +13,7 @@ export default function SourceCode() {
           <span className="text-green-400"> Source Code</span>
         </h2>
         <article className="flex gap-5 max-w-[600px] mx-auto mt-16 shadow-2xl p-6 border rounded-lg">
-          <img src="/public/Logo.png" alt="Logo Notion" className="w-[120px]" />
+          <img src="/Logo.png" alt="Logo Notion" className="w-[120px]" />
           <div className="text-left flex flex-col">
             <h3 className="text-xl font-bold mb-1">MiniPad</h3>
             <p className="text-gray-500">Ghi chú những gì bạn cần một cách đơn giản nhất!!</p>

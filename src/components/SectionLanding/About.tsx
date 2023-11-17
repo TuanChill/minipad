@@ -3,25 +3,25 @@ import { Link } from "react-router-dom";
 const authors = [
   {
     name: "Lương Ngọc Tuấn",
-    avatar: "/src/assets/img/authors/tuan.jpg",
+    avatar: "/authors/tuan.jpg",
     position: "Nhóm trưởng",
     profile: "https://github.com/TuanChill"
   },
   {
     name: "Trương Thị Lan Anh",
-    avatar: "/src/assets/img/authors/lanh.jpg",
+    avatar: "/authors/lanh.jpg",
     position: "Thành viên",
     profile: "https://www.facebook.com/lananh.truongthi.1401?mibextid=LQQJ4d"
   },
   {
     name: "Vũ Thị Ánh Ngọc",
-    avatar: "/src/assets/img/bg-source-section.jpg",
+    avatar: "/Logo.png",
     position: "Thành viên",
     profile: "https://www.facebook.com/profile.php?id=100020801284969&mibextid=LQQJ4d"
   },
   {
     name: "Nguyễn Kim Vui",
-    avatar: "/src/assets/img/authors/vui.jpg",
+    avatar: "/authors/vui.jpg",
     position: "Thành viên",
     profile: "https://www.facebook.com/hari.yorokobi?mibextid=LQQJ4d"
   },
