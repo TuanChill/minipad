@@ -16,6 +16,9 @@ export default {
       },
       fontFamily: {
         "logo": "Agbalumo",
+      }, 
+      maxWidth: {
+        "main": "80rem",
       }
     },
   },
