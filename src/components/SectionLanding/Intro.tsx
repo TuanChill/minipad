@@ -21,7 +21,7 @@ export default function Intro() {
               className="w-fit mx-auto bg-slate-800 text-white px-3 py-2 font-semibold hover:bg-slate-700"
             />
           </div>
-          <img className="items-end" src="src/assets/img/home-hero.webp" />
+          <img className="items-end" src="/home-hero.webp" />
         </div>
       </div>
     </section>
