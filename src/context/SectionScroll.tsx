@@ -6,13 +6,10 @@ export default function SectionScroll({children} : {
 }) {
     const location = useLocation();
     useEffect(() => {
-        const elementSection = document.querySelector(location.hash);
-        console.log(location.hash);
-        console.log(elementSection)
+        const elementSection = document.getElementById(location.hash.slice(1)) || null ;
         if(elementSection) {
             elementSection.scrollIntoView({ behavior: "smooth", block: "center"})
         }
-        console.log(location);
     }, [location])
   return (
     <>
