@@ -4,7 +4,7 @@ import { Button } from "../Button";
 export default function SourceCode() {
   return (
     <section
-      id="intro"
+      id="source-code"
       className="border-b border-gray-300 lg:h-[650px] bg-gray-50 py-16 flex flex-col justify-center"
     >
       <div className="text-center">

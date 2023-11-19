@@ -15,7 +15,7 @@ const authors = [
   },
   {
     name: "Vũ Thị Ánh Ngọc",
-    avatar: "/Logo.png",
+    avatar: "/authors/ngoc.jpg",
     position: "Thành viên",
     profile: "https://www.facebook.com/profile.php?id=100020801284969&mibextid=LQQJ4d"
   },
@@ -39,7 +39,7 @@ export default function About() {
         <div className="flex gap-8 mx-auto mt-10 flex-wrap justify-center mb-8">
           {authors.map((e) => {
             return (
-              <Link target="_blank" to={e.profile} className="flex flex-col items-center">
+              <Link key={e.name} target="_blank" to={e.profile} className="flex flex-col items-center">
                 <img className="w-[100px] h-[100px] rounded-full border-4 shadow-md shadow-gray-400 overflow-hidden hover:opacity-75" src={e.avatar} alt={e.name} />
                 <p className="font-semibold mt-5">{e.name}</p>
                 <p className="text-gray-500">{e.position}</p>
