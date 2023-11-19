@@ -7,8 +7,12 @@ import { GoogleIcon } from "../../../components/Icons";
 import { UserSchema } from "../../../containers/UserSchema";
 import { Link } from "react-router-dom";
 import { signIn, signInWithGg } from "../../../services/sign";
+import ToggleShowPassword from "../../../components/ToggleShowPassword";
+import { useState } from "react";
 
 export default function Login() {
+  const [hidePassword, toggleHide] = useState(true);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -59,10 +63,14 @@ export default function Login() {
         <InputControl
           name="password"
           placeholder="Mật Khẩu"
-          type="password"
+          type={hidePassword ? "text" : "password"}
           value={formik.values.password}
           error={formik.errors.password}
           onChange={formik.handleChange}
+        />
+        <ToggleShowPassword
+          isChecked={hidePassword}
+          onClick={() => toggleHide(!hidePassword)}
         />
         <Button
           text="Đăng nhập"
@@ -73,12 +81,12 @@ export default function Login() {
         <div className="flex justify-between">
           <Link to="/forgot-password">
             <button className="underline text-left text-sm text-red-500">
-              Quên mật khẩu?
+              Quên mật khẩu
             </button>
           </Link>
           <Link to="/register">
             <button className="underline text-left text-sm">
-              Bạn chưa có tài khoản
+              Bạn chưa có tài khoản?
             </button>
           </Link>
         </div>

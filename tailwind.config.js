@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 
 export default {
@@ -23,7 +24,9 @@ export default {
     },
   },
   plugins: [
-    require("@tailwindcss/forms"),
+    require("@tailwindcss/forms")({
+      strategy: 'class', // only generate classes
+    }),
     require("@tailwindcss/typography"),
   ],
 };

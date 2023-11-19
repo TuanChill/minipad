@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { resetPassword } from "../../../services/sign";
 import useQuery from "../../../hooks/useQuery";
+import ToggleShowPassword from "../../../components/ToggleShowPassword";
+import { useState } from "react";
 
 const PasswordSchema = Yup.object().shape({
   password: Yup.string()
@@ -14,6 +16,8 @@ const PasswordSchema = Yup.object().shape({
 });
 
 export default function ResetPassword() {
+  const [hidePassword, toggleHide] = useState(true);
+
   const navigate = useNavigate();
   const query = useQuery();
   const oobCode: string | null = query.get("oobCode");
@@ -25,7 +29,7 @@ export default function ResetPassword() {
     },
     onSubmit: (values) => {
       if (values.password !== values.repassword) {
-        formik.setErrors({ repassword: "Mật khẩu không giống nhau" });
+        formik.setErrors({ repassword: "Mật khẩu không trùng khớp" });
         return;
       }
 
@@ -62,7 +66,7 @@ export default function ResetPassword() {
         <InputControl
           name="password"
           placeholder="Mật khẩu"
-          type="password"
+          type={hidePassword ? "text" : "password"}
           value={formik.values.password}
           error={formik.errors.password}
           onChange={formik.handleChange}
@@ -70,10 +74,14 @@ export default function ResetPassword() {
         <InputControl
           name="repassword"
           placeholder="Nhập lại mật khẩu"
-          type="password"
+          type={hidePassword ? "text" : "password"}
           value={formik.values.repassword}
           error={formik.errors.repassword}
           onChange={formik.handleChange}
+        />
+        <ToggleShowPassword
+          isChecked={hidePassword}
+          onClick={() => toggleHide(!hidePassword)}
         />
         <Button
           text="Cập nhật"

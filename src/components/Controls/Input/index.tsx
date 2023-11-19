@@ -44,6 +44,7 @@ export default function InputControl({
         name={name}
         disabled={disabled}
         readOnly={readOnly}
+        required={required}
         onChange={onInputChange}
         placeholder={placeholder}
         className="form-input"

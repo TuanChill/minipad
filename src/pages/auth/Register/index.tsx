@@ -7,8 +7,11 @@ import { GoogleIcon } from "../../../components/Icons";
 import { UserSchema } from "../../../containers/UserSchema";
 import { Link } from "react-router-dom";
 import { signInWithGg, signUp } from "../../../services/sign";
+import ToggleShowPassword from "../../../components/ToggleShowPassword";
+import { useState } from "react";
 
 export default function Register() {
+  const [hidePassword, toggleHide] = useState(true);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,7 +20,7 @@ export default function Register() {
     },
     onSubmit: (values) => {
       if (values.password !== values.repassword) {
-        formik.setErrors({ repassword: "Mật khẩu không giống nhau" });
+        formik.setErrors({ repassword: "Mật khẩu không trùng khớp" });
         return;
       }
 
@@ -65,7 +68,7 @@ export default function Register() {
         <InputControl
           name="password"
           placeholder="Mật khẩu"
-          type="password"
+          type={hidePassword ? "text" : "password"}
           value={formik.values.password}
           error={formik.errors.password}
           onChange={formik.handleChange}
@@ -73,10 +76,14 @@ export default function Register() {
         <InputControl
           name="repassword"
           placeholder="Nhập lại mật khẩu"
-          type="password"
+          type={hidePassword ? "text" : "password"}
           value={formik.values.repassword}
           error={formik.errors.repassword}
           onChange={formik.handleChange}
+        />
+        <ToggleShowPassword
+          isChecked={hidePassword}
+          onClick={() => toggleHide(!hidePassword)}
         />
         <Button
           text="Đăng kí"
@@ -85,7 +92,9 @@ export default function Register() {
           onClick={formik.handleSubmit}
         />
         <Link to="/login">
-          <button className="underline text-left text-sm">Bạn đã có tài khoản?</button>
+          <button className="underline text-left text-sm">
+            Bạn đã có tài khoản?
+          </button>
         </Link>
       </form>
     </div>

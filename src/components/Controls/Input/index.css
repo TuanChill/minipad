@@ -1,5 +1,5 @@
 .form-control .form-input {
-  @apply rounded-md border-gray-300 shadow-sm w-full;
+  @apply rounded-md border-gray-300 shadow-sm w-full appearance-none;
   @apply focus:border-indigo-500 focus:ring-indigo-200 sm:text-sm focus:ring-2;
 }
 
