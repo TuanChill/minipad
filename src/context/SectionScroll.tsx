@@ -5,6 +5,7 @@ export default function SectionScroll({children} : {
     children: JSX.Element | JSX.Element[]
 }) {
     const location = useLocation();
+    // move to section by get id section in url path
     useEffect(() => {
         const elementSection = document.getElementById(location.hash.slice(1)) || null ;
         if(elementSection) {

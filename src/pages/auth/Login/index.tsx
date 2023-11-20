@@ -3,7 +3,6 @@ import * as Yup from "yup";
 
 import { Button } from "../../../components/Button";
 import InputControl from "../../../components/Controls/Input";
-import { GoogleIcon } from "../../../components/Icons";
 import { UserSchema } from "../../../containers/UserSchema";
 import { Link } from "react-router-dom";
 import { signIn, signInWithGg } from "../../../services/sign";
@@ -11,7 +10,7 @@ import ToggleShowPassword from "../../../components/ToggleShowPassword";
 import { useState } from "react";
 
 export default function Login() {
-  const [hidePassword, toggleHide] = useState(true);
+  const [showPassword, toggleHide] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -19,6 +18,7 @@ export default function Login() {
       password: "",
     },
     onSubmit: (values) => {
+      // validate form
       UserSchema.validate(values, { abortEarly: false })
         .then((valid) => {
           signIn(valid.email, valid.password);
@@ -29,6 +29,7 @@ export default function Login() {
           const errors = err.inner as Yup.ValidationError[];
           const errorMessages = { email: "", password: "" };
 
+          // push err into errMessages
           errors.forEach((error) => {
             if (!error.message || !error.path) return;
 
@@ -47,13 +48,14 @@ export default function Login() {
       <form className="form-container">
         <div className="login-social">
           <Button
-            iconLeft={<GoogleIcon />}
+            iconLeft={<i className="ri-google-fill mr-1"></i>}
             text="Đăng nhập với Google"
             className="w-full font-semibold"
             onClick={() => signInWithGg()}
           />
         </div>
         <InputControl
+          title="Email"
           name="email"
           placeholder="Email"
           value={formik.values.email}
@@ -61,16 +63,17 @@ export default function Login() {
           onChange={formik.handleChange}
         />
         <InputControl
+          title="Mật khẩu"
           name="password"
           placeholder="Mật Khẩu"
-          type={hidePassword ? "text" : "password"}
+          type={showPassword ? "text" : "password"}
           value={formik.values.password}
           error={formik.errors.password}
           onChange={formik.handleChange}
         />
         <ToggleShowPassword
-          isChecked={hidePassword}
-          onClick={() => toggleHide(!hidePassword)}
+          isChecked={showPassword}
+          onClick={() => toggleHide(!showPassword)}
         />
         <Button
           text="Đăng nhập"

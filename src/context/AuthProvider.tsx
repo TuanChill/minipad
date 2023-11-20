@@ -30,6 +30,7 @@ export default function AuthProvider({ children }: AuthenProviderProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // observer auth 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log(user);
       if (user) {

@@ -35,7 +35,7 @@ export default function About() {
           Nhóm
           <span className="text-blue-500"> Tác giả</span>
         </h2>
-        <p>Nhóm đã xây dựng một website nhằm giúp cho việc ghi chú trở nên dễ dàng hơn. <br />Cảm ơn bạn đã ủng hộ, nhóm rất hy vọng nó có ích cho bạn trong công việc !</p>
+        <p>Nhóm đã xây dựng một website nhằm giúp cho việc ghi chú trở nên dễ dàng hơn. <br />Cảm ơn bạn đã ủng hộ, nhóm rất hy vọng có ích cho bạn trong công việc !</p>
         <div className="flex gap-8 mx-auto mt-10 flex-wrap justify-center mb-8">
           {authors.map((e) => {
             return (

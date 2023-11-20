@@ -16,6 +16,7 @@ type Props = {
 }
 
 export const Button = ({text, onClick, className, type= "button" , disabled= false,primary, secondary ,otherProps, iconLeft, iconRight } : Props) => {
+    // join class with props
     const classes = joinClasses( "button", secondary && "secondary", primary && "primary" ,className);
 
     return (

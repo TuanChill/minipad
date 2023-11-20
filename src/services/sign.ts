@@ -53,6 +53,7 @@ export const verifyEmail = async () => {
 
 export const sendResetPassword = (email: string) => {
   return sendPasswordResetEmail(auth, email, {
+    // continue url
     url: `'https://${getUrlHost()}/reset-password`
   })
     .then(() => {

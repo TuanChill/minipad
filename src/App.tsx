@@ -20,6 +20,7 @@ function App() {
     <div>
       <AuthProvider>
         <Routes>
+          {/* auth route */}
           <Route element={<LayoutAuth />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -27,7 +28,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
-
+          {/*pad route  */}
           <Route path="/app">
             <Route element={<DefaultLayout />}>
               <Route
