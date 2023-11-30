@@ -14,6 +14,7 @@ import LayoutAuth from "./layouts/LayoutAuth";
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
 import ResetPassword from "./pages/auth/ResetPassword";
+import ProfileSetting from "./pages/auth/ProfileSetting";
 
 function App() {
   return (
@@ -42,7 +43,16 @@ function App() {
             </Route>
             <Route index element={<NotFound />} />
           </Route>
-          
+
+          <Route
+            path="/profile-setting"
+            element={
+              <PrivateRoute>
+                <ProfileSetting />
+              </PrivateRoute>
+            }
+          />
+
           <Route path="/" element={<LandingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

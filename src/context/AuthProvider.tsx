@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../firebase/config";
-import { useNavigate } from "react-router-dom";
+import { auth } from "../libs/firebase";
+// import { useNavigate } from "react-router-dom";
 
 export interface IAuthenUser {
   uid: string;
@@ -27,7 +27,7 @@ export default function AuthProvider({ children }: AuthenProviderProps) {
     user: null,
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     // observer auth 
@@ -42,7 +42,7 @@ export default function AuthProvider({ children }: AuthenProviderProps) {
             uid: user.uid,
           },
         });
-        navigate("/app/pad");
+        // navigate("/app/pad");
       } else {
         setAuthInfo({
           user: null,

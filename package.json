@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.13.0",
     "@tiptap/extension-highlight": "^2.1.12",
     "@tiptap/extension-typography": "^2.1.12",
     "@tiptap/pm": "^2.1.7",

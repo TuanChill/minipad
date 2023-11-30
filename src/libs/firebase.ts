@@ -21,6 +21,8 @@ const app = initializeApp(firebaseConfig);
 //use auth for app 
 const auth = getAuth(app);
 
+auth.languageCode = "vn";
+
 const db = getFirestore(app);
 const GgProvider = new GoogleAuthProvider();
 // const storage = getStorage(app);

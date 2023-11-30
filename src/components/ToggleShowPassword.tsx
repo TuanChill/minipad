@@ -10,7 +10,7 @@ export default function ToggleShowPassword({ isChecked, onClick }: IProps) {
         className="form-checkbox text-pink-500 rounded mr-2 focus:ring focus:ring-offset-0 focus:ring-transparent"
         type="checkbox"
         checked={isChecked}
-        onClick={onClick}
+        onChange={onClick}
       />
       <span className="text-sm">Hiển thị mật khẩu</span>
     </article>
