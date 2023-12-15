@@ -12,11 +12,12 @@ import { db } from "../libs/firebase";
 export interface IUser {
   uid: string;
   email: string;
-  fullName?: string;
-  phoneNumber?: string | null;
-  dateOfBirth?: Timestamp | null;
-  createAt?: Timestamp;
+  fullName: string;
+  phoneNumber: string ;
   photoURL: string;
+  dateOfBirth: Timestamp;
+  createAt?: Timestamp;
+  updateAt?: Timestamp;
 }
 
 const checkUid = (uid: string) => {
@@ -26,7 +27,7 @@ const checkUid = (uid: string) => {
 const USER_DOC = "users";
 
 export const createUser = async (user: IUser) => {
-  const { uid, email, fullName, phoneNumber, dateOfBirth, createAt, photoURL } =
+  const { uid, email, fullName, phoneNumber, dateOfBirth, createAt, photoURL, updateAt } =
     user;
 
   // check uid
@@ -38,8 +39,9 @@ export const createUser = async (user: IUser) => {
     fullName,
     photoURL,
     phoneNumber,
-    createAt,
     dateOfBirth,
+    createAt,
+    updateAt,
   });
   return 1;
 };
@@ -55,18 +57,26 @@ export const getUser = async (uid: string) => {
   }
 };
 
+export const isUserExists = async (uid: string) => {
+  //get doc
+  const user = await getDoc(doc(db, USER_DOC, uid));
+
+  return user.exists() ? true : false
+} 
+
 export const updateUser = async (uid: string, user: Partial<IUser>) => {
   // check uid
   checkUid(uid);
 
   //  update fields user info by uid
-  const { fullName, photoURL, phoneNumber, dateOfBirth } = user;
+  const { fullName, photoURL, phoneNumber, dateOfBirth, updateAt } = user;
   try {
     await updateDoc(doc(db, USER_DOC, uid), {
       fullName,
       phoneNumber,
       photoURL,
       dateOfBirth,
+      updateAt
     });
     return 1;
   } catch (error) {

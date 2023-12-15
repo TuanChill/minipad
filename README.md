@@ -36,13 +36,13 @@ Follow these steps to get started project:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/TuanChill/notion--.git
+   git clone https://github.com/TuanChill/minipad.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd notion--
+   cd minipad
    ```
 
 3. Install the dependencies:

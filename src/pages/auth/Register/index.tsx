@@ -10,6 +10,7 @@ import ToggleShowPassword from "../../../components/ToggleShowPassword";
 import { useState } from "react";
 import { createUser } from "../../../services/users";
 import { messageError, messageSuccess } from "../../../components/Message";
+import { toTimestamp } from "../../../utils/date";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -70,9 +71,11 @@ export default function Register() {
           fullName,
           phoneNumber,
           dateOfBirth,
-          createAt 
+          createAt,
+          updateAt: toTimestamp(new Date()),
         });
         messageSuccess("Đăng ký thành công");
+        navigate("/app/pad")
       } catch (error) {
         messageError("Đã có lỗi xảy ra. Vui lòng thử lại")
         console.log(error);

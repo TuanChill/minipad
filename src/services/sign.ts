@@ -11,6 +11,7 @@ import { messageError, messageSuccess } from "../components/Message";
 import { setAuthCache } from "../containers/localAuth";
 import { getUrlHost } from "../utils";
 import { IUser, createUser } from "./users";
+import { toTimestamp } from "../utils/date";
 
 export const signIn = (email: string, password: string) => {
   //  sign in with email and password
@@ -34,15 +35,15 @@ export const signInWithGg = async () => {
       // set user in cache of browser
       setAuthCache(user);
       // messageSuccess("Đăng nhập thành công");
-      const { uid, displayName, phoneNumber, photoURL, email, metadata } = user;
+      const { uid, displayName, phoneNumber, photoURL, email } = user;
       return {
         uid,
         fullName: displayName,
         email,
         photoURL,
         phoneNumber,
-        createAt: metadata.creationTime,
-        dateOfBirth: null,
+        createAt: toTimestamp(new Date()),
+        dateOfBirth: toTimestamp(new Date()),
       } as IUser;
     })
     .catch(() => {
@@ -63,9 +64,9 @@ export const signUp = (email: string, password: string) => {
         email,
         fullName: user.displayName,
         photoURL: user.photoURL,
-        createAt: user.metadata.creationTime,
-        dateOfBirth: null,
-        phoneNumber: null,
+        createAt: toTimestamp(new Date()),
+        dateOfBirth: toTimestamp(new Date()),
+        phoneNumber: "",
       } as IUser;
     })
     .catch((err) => {
@@ -80,9 +81,10 @@ export const signUp = (email: string, password: string) => {
           email: user.email,
           fullName: user.fullName,
           photoURL: user.photoURL,
-          createAt: user.createAt,
           dateOfBirth: user.dateOfBirth,
           phoneNumber: user.phoneNumber,
+          createAt: user.createAt,
+          updateAt: user.updateAt
         });
       }
     })

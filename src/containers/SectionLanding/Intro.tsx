@@ -1,4 +1,4 @@
-import { Button } from "../Button";
+import { Button } from "../../components/Button";
 import heroImg from "../../assets/img/home-hero.webp"
 import "./index.css";
 import { useNavigate } from "react-router-dom";
