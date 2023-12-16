@@ -10,14 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cloudinary/react": "^1.11.2",
-    "@cloudinary/url-gen": "^1.13.0",
     "@tiptap/extension-highlight": "^2.1.12",
     "@tiptap/extension-typography": "^2.1.12",
     "@tiptap/pm": "^2.1.7",
     "@tiptap/react": "^2.1.7",
     "@tiptap/starter-kit": "^2.1.7",
-    "axios": "^1.4.0",
     "dayjs": "^1.11.10",
     "firebase": "^10.3.0",
     "formik": "^2.4.3",

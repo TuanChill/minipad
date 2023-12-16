@@ -6,7 +6,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../libs/firebase";
+import { db, } from "../libs/firebase";
 
 // user interface info
 export interface IUser {
@@ -80,8 +80,22 @@ export const updateUser = async (uid: string, user: Partial<IUser>) => {
     });
     return 1;
   } catch (error) {
-    return 0;
     console.log(error);
+    return 0;
+  }
+};
+
+
+export const updateFieldUser = async (uid: string, user: object) => {
+  // check uid
+  checkUid(uid);
+
+  try {
+    await updateDoc(doc(db, USER_DOC, uid), user);
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return 0;
   }
 };
 

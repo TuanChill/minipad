@@ -1,24 +1,27 @@
 import { useEffect } from "react";
 import Header from "../../../layouts/components/Header";
-import { getCurrentUserInfo } from "../../../containers/getCurrentUserInfo";
 import { Button } from "../../../components/Button";
 import InputControl from "../../../components/Controls/Input";
 import { useFormik } from "formik";
 import dayjs from "dayjs";
+import AvatarLane from "../../../containers/ProfileSetting/AvatarLane";
+import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
 const navList = [
   { path: "/", title: "Trang chủ" },
   { path: "/app/pad", title: "Ghi chú ngay" },
 ];
 
-const defaultAvatar = "/defaultAvatar.jpg";
+export const defaultAvatar = "/defaultAvatar.jpg";
 
 export default function ProfileSetting() {
+  const user = useCurrentUser();
+
   const formik = useFormik({
     initialValues: {
       email: "",
       fullName: "",
-      photoURL: defaultAvatar,
+      photoURL: "",
       dateOfBirth: "",
       phoneNumber: "",
       // newPassword: "",
@@ -28,56 +31,37 @@ export default function ProfileSetting() {
   });
 
   useEffect(() => {
-    getCurrentUserInfo().then((user) => {
-      // checck get successfully user
-      if (!user) {
-        return;
-      }
+    // checck get successfully user
+    if (!user) {
+      return;
+    }
 
-      console.log(user);
-      const { email, fullName, photoURL, phoneNumber, dateOfBirth } = user;
+    console.log(user);
+    const { email, fullName, photoURL, phoneNumber, dateOfBirth } = user;
 
-      // convert timestamp to string date
-      const birthDay = dayjs(dateOfBirth.toDate()).format("YYYY-MM-DD");
+    // convert timestamp to string date
+    const birthDay = dayjs(dateOfBirth.toDate()).format("YYYY-MM-DD");
 
-      // set user field for input
-      formik.setValues({
-        email: email,
-        fullName: fullName,
-        photoURL: photoURL,
-        phoneNumber: phoneNumber,
-        dateOfBirth: birthDay ?? "",
-      });
+    // set user field for input
+    formik.setValues({
+      email: email,
+      fullName: fullName,
+      photoURL: photoURL,
+      phoneNumber: phoneNumber,
+      dateOfBirth: birthDay ?? "",
     });
-  }, []);
+  }, [user]);
 
   return (
     <div>
       <Header navList={navList} />
-      <main className="mt-20 mx-8 lg:mx-auto max-w-main">
-        {/* avatar section */}
-        <section className="flex">
-          <img
-            src={formik.values.photoURL}
-            alt={formik.values.fullName}
-            className="w-[80px] rounded-full"
-          />
-          <div className="ml-6">
-            <div className="flex gap-4">
-              <Button
-                text="Cập nhật ảnh"
-                className="bg-blue-600 text-white hover:bg-blue-500"
-              />
-              <Button text="Xoá ảnh" />
-            </div>
-            <p className="mt-3 text-sm text-red-400">
-              Vui lòng chỉ cập nhật ảnh PNG/JPG
-            </p>
-          </div>
-        </section>
+      <main className="mt-20 mx-8 lg:mx-auto lg:px-3 max-w-main">
+        <AvatarLane avt={formik.values.photoURL} />
         {/* info section */}
         <section className="mt-6">
-          <h4 className="font-semibold text-lg mb-2 text-emerald">Thông tin cá nhân</h4>
+          <h4 className="font-semibold text-lg mb-2 text-emerald">
+            Thông tin cá nhân
+          </h4>
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
             <InputControl
               title="Tên hiển thị"
@@ -108,23 +92,32 @@ export default function ProfileSetting() {
               type="date"
               value={formik.values.dateOfBirth.toString()}
               onChange={(e) => {
-                formik.setFieldValue("dateOfBirth", e.target.value)
+                formik.setFieldValue("dateOfBirth", e.target.value);
               }}
               placeholder="Cập nhật ngày sinh"
             />
           </div>
-          <Button save onClick={formik.handleSubmit} className="mt-4 float-right" text="Lưu" />
+          <Button
+            save
+            onClick={formik.handleSubmit}
+            className="mt-4 float-right"
+            text="Lưu"
+          />
         </section>
         {/* password section */}
         <section className="mt-6">
-          <h4 className="font-semibold text-lg mb-2 text-emerald">Đổi mật khẩu</h4>
+          <h4 className="font-semibold text-lg mb-2 text-emerald">
+            Đổi mật khẩu
+          </h4>
           <InputControl
             title="Mật khẩu mới"
+            value="hehe"
             placeholder="Nhập mật khẩu mới"
             type="password"
           />
           <InputControl
             className="mt-4"
+            value="hehe"
             title="Nhập lại mật khẩu mới"
             placeholder="Nhập lại mật khẩu mới"
             type="password"
@@ -133,9 +126,17 @@ export default function ProfileSetting() {
         </section>
         {/* delete account */}
         <section className="mt-6">
-          <h4 className="font-semibold text-lg mb-2 text-emerald">Bạn muốn xoá tài khoản?</h4>
-          <p className="text-sm">Điều này sẽ xoá tài khoản và tất cả thông tin của bạn. Hành động này không thể khôi phục</p>
-          <Button className="mt-3 bg-red-100 text-red-500 border-red-500" text="Xoá Tài Khoản" />
+          <h4 className="font-semibold text-lg mb-2 text-emerald">
+            Bạn muốn xoá tài khoản?
+          </h4>
+          <p className="text-sm">
+            Điều này sẽ xoá tài khoản và tất cả thông tin của bạn. Hành động này
+            không thể khôi phục
+          </p>
+          <Button
+            className="mt-3 bg-red-100 text-red-500 border-red-500"
+            text="Xoá Tài Khoản"
+          />
         </section>
       </main>
     </div>
