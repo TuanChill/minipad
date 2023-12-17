@@ -3,9 +3,9 @@ import Header from "../../../layouts/components/Header";
 import { Button } from "../../../components/Button";
 import InputControl from "../../../components/Controls/Input";
 import { useFormik } from "formik";
-import dayjs from "dayjs";
 import AvatarLane from "../../../containers/ProfileSetting/AvatarLane";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
+import { toDateTime } from "../../../utils/date";
 
 const navList = [
   { path: "/", title: "Trang chủ" },
@@ -40,7 +40,8 @@ export default function ProfileSetting() {
     const { email, fullName, photoURL, phoneNumber, dateOfBirth } = user;
 
     // convert timestamp to string date
-    const birthDay = dayjs(dateOfBirth.toDate()).format("YYYY-MM-DD");
+    const birthDay = toDateTime(dateOfBirth)
+    console.log(birthDay)
 
     // set user field for input
     formik.setValues({
