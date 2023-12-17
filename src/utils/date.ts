@@ -8,3 +8,6 @@ export const toTimestamp = (date: Date): Timestamp => {
 export const getNowTime = () : Date => {
     return new Date();
 }
+function toDateTime (Timestamp){
+    return new Date(Timestamp). toLocaleDateString();
+}
