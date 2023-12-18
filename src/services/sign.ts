@@ -1,4 +1,5 @@
 import {
+  EmailAuthProvider,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -9,7 +10,7 @@ import {
 import { GgProvider, auth } from "../libs/firebase";
 import { messageError, messageSuccess } from "../components/Message";
 import { setAuthCache } from "../containers/localAuth";
-import { getUrlHost } from "../utils";
+import { extractNameFromEmail, getUrlHost } from "../utils";
 import { IUser, createUser } from "./users";
 import { toTimestamp } from "../utils/date";
 
@@ -75,16 +76,17 @@ export const signUp = (email: string, password: string) => {
     })
     .then(async (user) => {
       //  if create success user authen. save user info in docs
+      console.log(user)
       if(user) {
         await createUser({
           uid: user.uid,
           email: user.email,
-          fullName: user.fullName,
+          fullName: extractNameFromEmail(user.email),
           photoURL: user.photoURL,
-          dateOfBirth: user.dateOfBirth,
-          phoneNumber: user.phoneNumber,
-          createAt: user.createAt,
-          updateAt: user.updateAt
+          dateOfBirth: user.dateOfBirth ?? "",
+          phoneNumber: user.phoneNumber ?? "",
+          createAt: toTimestamp(new Date()),
+          updateAt: toTimestamp(new Date())
         });
       }
     })
@@ -123,3 +125,20 @@ export const resetPassword = (oobCode: string, newPassword: string) => {
       console.log(err);
     });
 };
+
+// export const reauthenticate = () => {
+//   const user = auth.currentUser;
+//   let credential 
+//   console.log(EmailAuthProvider)
+//   console.log(first)
+//   if(EmailAuthProvider) {
+
+//   }
+
+// reauthenticateWithCredential(user, credential).then(() => {
+//   // User re-authenticated.
+// }).catch((error) => {
+//   // An error ocurred
+//   // ...
+// })
+// }

@@ -62,15 +62,15 @@ export default function Register() {
     const user = await signInWithGg();
     //  if create user authen successfully. save user info in doc
     if (user) {
-      const { uid, photoURL, email, fullName,phoneNumber ,dateOfBirth, createAt } = user;
+      const { uid, photoURL, email, fullName , createAt } = user;
       try {
         await createUser({
           uid: uid,
           email,
           photoURL,
           fullName,
-          phoneNumber,
-          dateOfBirth,
+          phoneNumber: "",
+          dateOfBirth: toTimestamp(new Date()),
           createAt,
           updateAt: toTimestamp(new Date()),
         });

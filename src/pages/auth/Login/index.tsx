@@ -50,7 +50,7 @@ export default function Login() {
     const user = await signInWithGg();
     //  if create/get user authen successfully
     if (user) {
-      const { uid, photoURL, email, fullName,phoneNumber ,dateOfBirth, createAt } = user;
+      const { uid, photoURL, email, fullName ,dateOfBirth, createAt } = user;
       if(await !isUserExists(uid)) {
         return
       }
@@ -60,13 +60,13 @@ export default function Login() {
           email,
           photoURL,
           fullName,
-          phoneNumber,
+          phoneNumber: "",
           dateOfBirth,
           createAt, 
           updateAt: toTimestamp(new Date()),
         });
         messageSuccess("Đăng nhập thành công");
-        navigate("/app/pad")
+        navigate(-1) // go back
       } catch (error) {
         messageError("Đã có lỗi xảy ra. Vui lòng thử lại")
         console.log(error);

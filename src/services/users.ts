@@ -20,6 +20,18 @@ export interface IUser {
   updateAt?: Timestamp;
 }
 
+export interface IDUser {
+  uid: string;
+  email: string;
+  fullName: string;
+  phoneNumber: string ;
+  photoURL: string;
+  dateOfBirth: Timestamp;
+  createAt?: Timestamp;
+  updateAt?: Timestamp;
+}
+
+
 const checkUid = (uid: string) => {
   if (uid === "") throw new Error("Uid is not valid");
 };
@@ -51,7 +63,7 @@ export const getUser = async (uid: string) => {
 
   // check user exist
   if (user.exists()) {
-    return user.data() as IUser;
+    return user.data() as IDUser;
   } else {
     return null;
   }
@@ -69,12 +81,11 @@ export const updateUser = async (uid: string, user: Partial<IUser>) => {
   checkUid(uid);
 
   //  update fields user info by uid
-  const { fullName, photoURL, phoneNumber, dateOfBirth, updateAt } = user;
+  const { fullName, phoneNumber, dateOfBirth, updateAt } = user;
   try {
     await updateDoc(doc(db, USER_DOC, uid), {
       fullName,
       phoneNumber,
-      photoURL,
       dateOfBirth,
       updateAt
     });

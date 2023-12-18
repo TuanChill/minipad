@@ -8,8 +8,12 @@ export const useCurrentUser = (): IUser | null  => {
 
   useEffect(() => {
     if (user) {
-      getUser(user?.uid).then((user) => {
-        setInfo(user);
+      getUser(user?.uid).then((result) => {
+        const nUser = {
+          ...result,
+          uid: user.uid
+        } as IUser
+        setInfo(nUser)
       });
     }
   }, [user]);

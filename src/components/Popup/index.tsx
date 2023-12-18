@@ -18,12 +18,12 @@ export default function Popup({ visible, title, children, onClose }: IPopup) {
       className="fixed inset-0 z-50 flex justify-center items-center lg:items-start"
     >
       <div
-        className={`bg-gray-50 rounded-md shadow-lg min-w-[200px] h-fit lg:mt-[200px]`}
+        className={`bg-gray-50 rounded-md overflow-hidden shadow-lg min-w-[200px] h-fit lg:mt-[200px]`}
       >
-        <div className="flex p-2 justify-between items-center border-b-[1px]">
-          <span className="font-semibold">{title}</span>
+        <div className="flex p-2 justify-between items-center border-b-[1px] bg-slate-500 text-white">
+          <span className="font-semibold ">{title}</span>
           <button onClick={() => onClose()}>
-            <i className="ri-close-fill p-1"></i>
+            <i className="ri-close-fill p-1 "></i>
           </button>
         </div>
         <div className="px-2 pt-2 pb-4 mt-1">{children}</div>
