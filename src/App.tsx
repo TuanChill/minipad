@@ -15,6 +15,9 @@ import "remixicon/fonts/remixicon.css";
 import "./index.css";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ProfileSetting from "./pages/auth/ProfileSetting";
+import Donate from "./pages/donate";
+import Welcome from "./pages/Welcome";
+import Feature from "./pages/feature";
 
 function App() {
   return (
@@ -55,6 +58,9 @@ function App() {
 
           <Route path="/" element={<LandingPage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/donate" element={<Donate />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/feature" element={<Feature />} />
         </Routes>
       </AuthProvider>
     </div>
