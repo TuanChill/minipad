@@ -1,5 +1,5 @@
 import { openInNewTab } from "../../utils";
-import { Button } from "../Button";
+import { Button } from "../../components/Button";
 
 export default function SourceCode() {
   return (

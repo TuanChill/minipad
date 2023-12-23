@@ -3,15 +3,19 @@ import * as Yup from "yup";
 
 import { Button } from "../../../components/Button";
 import InputControl from "../../../components/Controls/Input";
-import { GoogleIcon } from "../../../components/Icons";
 import { UserSchema } from "../../../containers/UserSchema";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithGg, signUp } from "../../../services/sign";
 import ToggleShowPassword from "../../../components/ToggleShowPassword";
 import { useState } from "react";
+import { createUser } from "../../../services/users";
+import { messageError, messageSuccess } from "../../../components/Message";
+import { toTimestamp } from "../../../utils/date";
 
 export default function Register() {
-  const [hidePassword, toggleHide] = useState(true);
+  const navigate = useNavigate();
+
+  const [showPassword, toggleHide] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -19,6 +23,7 @@ export default function Register() {
       repassword: "",
     },
     onSubmit: (values) => {
+      // check pass and re-pass
       if (values.password !== values.repassword) {
         formik.setErrors({ repassword: "Mật khẩu không trùng khớp" });
         return;
@@ -26,14 +31,21 @@ export default function Register() {
 
       UserSchema.validate(values, { abortEarly: false })
         .then((valid) => {
-          signUp(valid.email, valid.password);
+          signUp(valid.email, valid.password)
+            //  sign success, navigate to login
+            .then(() => {
+              messageSuccess("Đăng ký thành công")
+              navigate("/login");
+            })
         })
         .catch((err) => {
           if (!err.inner.length) return;
 
+          // init err
           const errors = err.inner as Yup.ValidationError[];
           const errorMessages = { email: "", password: "" };
 
+          // push err into errMess
           errors.forEach((error) => {
             if (!error.message || !error.path) return;
 
@@ -46,19 +58,45 @@ export default function Register() {
     },
   });
 
+  const contWithGg = async () => {
+    const user = await signInWithGg();
+    //  if create user authen successfully. save user info in doc
+    if (user) {
+      const { uid, photoURL, email, fullName , createAt } = user;
+      try {
+        await createUser({
+          uid: uid,
+          email,
+          photoURL,
+          fullName,
+          phoneNumber: "",
+          dateOfBirth: toTimestamp(new Date()),
+          createAt,
+          updateAt: toTimestamp(new Date()),
+        });
+        messageSuccess("Đăng ký thành công");
+        navigate("/app/pad")
+      } catch (error) {
+        messageError("Đã có lỗi xảy ra. Vui lòng thử lại")
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <div className="wrapper">
-      <h1 className="text-5xl text-center font-bold mb-8">Đăng Kí Tài Khoản</h1>
+      <h1 className="text-5xl text-center font-bold mb-8">Đăng Ký</h1>
       <form className="form-container">
         <div className="login-social">
           <Button
-            iconLeft={<GoogleIcon />}
+            iconLeft={<i className="ri-google-fill mr-1"></i>}
             text="Đăng nhập với Google"
             className="w-full font-semibold"
-            onClick={signInWithGg}
+            onClick={contWithGg}
           />
         </div>
         <InputControl
+          title="Email"
           name="email"
           placeholder="Email"
           value={formik.values.email}
@@ -66,9 +104,10 @@ export default function Register() {
           onChange={formik.handleChange}
         />
         <InputControl
+          title="Mật khẩu"
           name="password"
           placeholder="Mật khẩu"
-          type={hidePassword ? "text" : "password"}
+          type={showPassword ? "text" : "password"}
           value={formik.values.password}
           error={formik.errors.password}
           onChange={formik.handleChange}
@@ -76,17 +115,17 @@ export default function Register() {
         <InputControl
           name="repassword"
           placeholder="Nhập lại mật khẩu"
-          type={hidePassword ? "text" : "password"}
+          type={showPassword ? "text" : "password"}
           value={formik.values.repassword}
           error={formik.errors.repassword}
           onChange={formik.handleChange}
         />
         <ToggleShowPassword
-          isChecked={hidePassword}
-          onClick={() => toggleHide(!hidePassword)}
+          isChecked={showPassword}
+          onClick={() => toggleHide(!showPassword)}
         />
         <Button
-          text="Đăng kí"
+          text="Đăng ký"
           type="submit"
           className="btn-submit"
           onClick={formik.handleSubmit}

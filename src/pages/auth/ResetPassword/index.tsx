@@ -16,10 +16,11 @@ const PasswordSchema = Yup.object().shape({
 });
 
 export default function ResetPassword() {
-  const [hidePassword, toggleHide] = useState(true);
+  const [showPassword, toggleHide] = useState(false);
 
   const navigate = useNavigate();
   const query = useQuery();
+  // get oobCode in url
   const oobCode: string | null = query.get("oobCode");
 
   const formik = useFormik({
@@ -35,6 +36,7 @@ export default function ResetPassword() {
 
       PasswordSchema.validate(values, { abortEarly: false })
         .then((valid) => {
+          // check exist oobCode
           if (oobCode) {
             resetPassword(oobCode, valid.password).then(() => {
               navigate("/login")
@@ -59,6 +61,7 @@ export default function ResetPassword() {
     },
   });
 
+  // only accept url reset password from email
   return oobCode ? (
     <div className="wrapper">
       <h1 className="text-5xl text-center font-bold mb-8">Cập nhật mật khẩu</h1>
@@ -66,7 +69,7 @@ export default function ResetPassword() {
         <InputControl
           name="password"
           placeholder="Mật khẩu"
-          type={hidePassword ? "text" : "password"}
+          type={showPassword ? "text" : "password"}
           value={formik.values.password}
           error={formik.errors.password}
           onChange={formik.handleChange}
@@ -74,14 +77,14 @@ export default function ResetPassword() {
         <InputControl
           name="repassword"
           placeholder="Nhập lại mật khẩu"
-          type={hidePassword ? "text" : "password"}
+          type={showPassword ? "text" : "password"}
           value={formik.values.repassword}
           error={formik.errors.repassword}
           onChange={formik.handleChange}
         />
         <ToggleShowPassword
-          isChecked={hidePassword}
-          onClick={() => toggleHide(!hidePassword)}
+          isChecked={showPassword}
+          onClick={() => toggleHide(!showPassword)}
         />
         <Button
           text="Cập nhật"

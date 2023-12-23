@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { auth } from "../../../firebase/config";
+import { auth } from "../../../libs/firebase";
 import { useNavigate } from "react-router-dom";
 import { rmAuthCache } from "../../../containers/localAuth";
 

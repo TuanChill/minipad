@@ -1,15 +1,15 @@
 .app-sidebar {
   @apply flex-shrink-0 flex flex-row;
-  @apply min-w-[230px] max-w-[500px];
+  @apply min-w-[300px] max-w-[500px];
   @apply bg-white border-r border-gray-300 shadow-lg rounded-l-3xl z-20;
 }
 
 .app-sidebar .app-sidebar-content {
-  @apply flex-1;
+  @apply flex-1 relative;
 }
 
 .app-sidebar .app-sidebar-resizer {
   @apply flex-shrink-0 flex-grow-0;
-  @apply w-[1px] cursor-col-resize resize-x;
-  @apply hover:w-2 bg-gray-300 hover:bg-opacity-75;
+  @apply w-[1px] pr-[2px] cursor-col-resize resize-x;
+  @apply bg-gray-300 hover:bg-opacity-75;
 }

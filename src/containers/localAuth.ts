@@ -3,17 +3,17 @@ import { getCacheJson, rmCache, setCache } from "../utils/localCache"
 
 export const keyAuthInfo = "auth-info"
 
-interface IUserAuthCache extends IAuthenUser {
-    refreshToken: string;
-}
+// export interface IUserAuthCache extends IAuthenUser {
+//     refreshToken: string;
+// }
 
-export const setAuthCache = (value: IUserAuthCache) => {
+export const setAuthCache = (value: IAuthenUser) => {
     const userAuth = {
         uid: value.uid,
         email: value.email,
         displayName: value.displayName,
         photoURL: value.photoURL,
-        refreshToken: value.refreshToken,
+        // refreshToken: value.refreshToken,
       }
     setCache(keyAuthInfo, userAuth);
 }

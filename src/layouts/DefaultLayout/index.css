@@ -7,5 +7,5 @@
 }
 
 .content {
-    @apply pt-14 overflow-y-scroll h-screen relative z-10;
+    @apply h-screen relative z-10;
 }

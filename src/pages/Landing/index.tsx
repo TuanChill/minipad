@@ -1,6 +1,6 @@
-import About from "../../components/SectionLanding/About";
-import Intro from "../../components/SectionLanding/Intro";
-import SourceCode from "../../components/SectionLanding/SourceCode";
+import About from "../../containers/SectionLanding/About";
+import Intro from "../../containers/SectionLanding/Intro";
+import SourceCode from "../../containers/SectionLanding/SourceCode";
 import SectionScroll from "../../context/SectionScroll";
 import Header from "../../layouts/components/Header";
 

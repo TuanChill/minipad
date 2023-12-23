@@ -14,12 +14,16 @@ import LayoutAuth from "./layouts/LayoutAuth";
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
 import ResetPassword from "./pages/auth/ResetPassword";
+import ProfileSetting from "./pages/auth/ProfileSetting";
+import PadContainer from "./containers/Pads/PadContainer";
+import PadEmpty from "./containers/Pads/PadEmpty";
 
 function App() {
   return (
     <div>
       <AuthProvider>
         <Routes>
+          {/* auth route */}
           <Route element={<LayoutAuth />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -27,7 +31,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
-
+          {/*pad route  */}
           <Route path="/app">
             <Route element={<DefaultLayout />}>
               <Route
@@ -37,11 +41,23 @@ function App() {
                     <Pad />
                   </PrivateRoute>
                 }
-              />
+              >
+                <Route index element={<PadEmpty />} />
+                <Route path=":id" element={<PadContainer />} />
+              </Route>
             </Route>
             <Route index element={<NotFound />} />
           </Route>
-          
+
+          <Route
+            path="/profile-setting"
+            element={
+              <PrivateRoute>
+                <ProfileSetting />
+              </PrivateRoute>
+            }
+          />
+
           <Route path="/" element={<LandingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

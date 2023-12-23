@@ -7,7 +7,8 @@ export default {
     extend: {
       colors: {
         primary: "rgb(235, 87, 87)",
-        sidebar_hover: "rgba(55,53,47,0.08)"
+        sidebar_hover: "rgba(55,53,47,0.08)",
+        emerald: "#2ecc71",
       },
       width: {
         av_small: "30px",
@@ -20,7 +21,7 @@ export default {
       }, 
       maxWidth: {
         "main": "80rem",
-      }
+      },
     },
   },
   plugins: [

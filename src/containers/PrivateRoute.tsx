@@ -7,9 +7,11 @@ interface IPrivateRouteProps {
 }
 
 export default function PrivateRoute({ children }: IPrivateRouteProps) {
+  // get user in cache
   const user = getAuthCache();
   console.log(user);
   
+  // check user
   if (isEmptyObject(user)) {
     return <Navigate to="/login" replace />;
   }
