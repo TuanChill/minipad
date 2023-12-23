@@ -1,5 +1,4 @@
 import {
-  EmailAuthProvider,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -13,6 +12,8 @@ import { setAuthCache } from "../containers/localAuth";
 import { extractNameFromEmail, getUrlHost } from "../utils";
 import { IUser, createUser } from "./users";
 import { toTimestamp } from "../utils/date";
+
+const defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/notion-6958d.appspot.com/o/avatars%2FdefaultAvt.png?alt=media&token=5a1eb34b-c9d1-493e-b708-158a4cc4b0d4"
 
 export const signIn = (email: string, password: string) => {
   //  sign in with email and password
@@ -64,7 +65,7 @@ export const signUp = (email: string, password: string) => {
         uid: user.uid,
         email,
         fullName: user.displayName,
-        photoURL: user.photoURL,
+        photoURL: user.photoURL ?? defaultAvatar,
         createAt: toTimestamp(new Date()),
         dateOfBirth: toTimestamp(new Date()),
         phoneNumber: "",
@@ -82,7 +83,7 @@ export const signUp = (email: string, password: string) => {
           uid: user.uid,
           email: user.email,
           fullName: extractNameFromEmail(user.email),
-          photoURL: user.photoURL,
+          photoURL: user.photoURL ?? defaultAvatar,
           dateOfBirth: user.dateOfBirth ?? "",
           phoneNumber: user.phoneNumber ?? "",
           createAt: toTimestamp(new Date()),

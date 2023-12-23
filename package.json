@@ -10,8 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tippyjs/react": "^4.2.6",
     "@tiptap/extension-highlight": "^2.1.12",
+    "@tiptap/extension-image": "^2.1.13",
+    "@tiptap/extension-link": "^2.1.13",
+    "@tiptap/extension-text-align": "^2.1.13",
     "@tiptap/extension-typography": "^2.1.12",
+    "@tiptap/extension-underline": "^2.1.13",
+    "@tiptap/extension-youtube": "^2.1.13",
     "@tiptap/pm": "^2.1.7",
     "@tiptap/react": "^2.1.7",
     "@tiptap/starter-kit": "^2.1.7",
@@ -22,6 +28,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-router-dom": "^6.15.0",
     "remixicon": "^3.5.0",
+    "uuid": "^9.0.1",
     "yup": "^1.2.0"
   },
   "devDependencies": {

@@ -21,7 +21,7 @@ export default {
       }, 
       maxWidth: {
         "main": "80rem",
-      }
+      },
     },
   },
   plugins: [

@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, KeyboardEventHandler } from 'react'
 
 interface InputBaseProps {
   title: string
@@ -6,6 +6,7 @@ interface InputBaseProps {
   name: string
   type: string
   onChange: (ev: ChangeEvent<HTMLInputElement>) => void
+  onKeyPress: (ev: KeyboardEventHandler<HTMLInputElement>) => void
   placeholder: string
   helper: string
   error: string

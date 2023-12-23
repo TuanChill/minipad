@@ -15,6 +15,8 @@ import "remixicon/fonts/remixicon.css";
 import "./index.css";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ProfileSetting from "./pages/auth/ProfileSetting";
+import PadContainer from "./containers/Pads/PadContainer";
+import PadEmpty from "./containers/Pads/PadEmpty";
 
 function App() {
   return (
@@ -39,7 +41,10 @@ function App() {
                     <Pad />
                   </PrivateRoute>
                 }
-              />
+              >
+                <Route index element={<PadEmpty />} />
+                <Route path=":id" element={<PadContainer />} />
+              </Route>
             </Route>
             <Route index element={<NotFound />} />
           </Route>

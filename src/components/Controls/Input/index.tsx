@@ -8,6 +8,7 @@ export default function InputControl({
   title,
   value,
   onChange,
+  onKeyPress,
   type = "text",
   name,
   placeholder,
@@ -27,6 +28,11 @@ export default function InputControl({
   const onInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
     onChange && onChange(ev);
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onKeyPressInput = (ev: any) => {
+    onKeyPress && onKeyPress(ev);
+}
 
   useEffect(() => {
     setVal(value);
@@ -60,6 +66,7 @@ export default function InputControl({
           readOnly={readOnly}
           required={required}
           onChange={onInputChange}
+          onKeyPress={onKeyPressInput}
           placeholder={placeholder}
           className="form-input"
         />

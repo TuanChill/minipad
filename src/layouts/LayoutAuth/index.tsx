@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 const navList = [
   {path: "/", title: "Trang chủ"},
-  {path: "/app/pad", title: "Note Now"},
+  {path: "/app/pad", title: "Ghi chú"},
 ]
 
 export default function LayoutAuth() {

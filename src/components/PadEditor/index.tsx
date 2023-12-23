@@ -2,52 +2,86 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
-import MenuBar from "./MenuBar";
+import Youtube from "@tiptap/extension-youtube";
+import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
+import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
 
-export default function PadEditor() {
+import { MenuBar } from "./MenuBar";
+import { useEffect, useState } from "react";
+import TittlePad from "../../containers/Pads/TittlePad";
+import "./index.css";
+import "./editor.css"
+
+interface IPadEditor {
+  id: string;
+  content: string;
+}
+
+let timer = "none";
+
+const extensions = [
+  StarterKit,
+  Highlight,
+  Typography,
+  Youtube,
+  Link.configure({ openOnClick: false }),
+  Image,
+  TextAlign,
+  Underline,
+];
+
+export default function PadEditor({ id, content }: IPadEditor) {
+  const [update, setUpdate] = useState(0);
+
   const editor = useEditor({
-    extensions: [StarterKit, Highlight, Typography],
+    extensions: extensions,
     editorProps: {
       attributes: {
         class:
           "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none m-auto",
       },
     },
-    content: `<h2>
-    Hi there,
-  </h2>
-  <p>
-    this is a basic <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-  </p>
-  <ul>
-    <li>
-      That’s a bullet list with one …
-    </li>
-    <li>
-      … or two list items.
-    </li>
-  </ul>
-  <p>
-    Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-  </p>
-<pre><code class="language-css">body {
-display: none;
-}</code></pre>
-  <p>
-    I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-  </p>
-  <blockquote>
-    Wow, that’s amazing. Good work, boy! 👏
-    <br />
-    — Mom
-  </blockquote>
-    `,
+    content: content,
+    onUpdate() {
+      setUpdate((prev) => prev + 1);
+    },
   });
+
+  useEffect(() => {
+    if (editor) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(() => {
+        const html = editor.getHTML();
+        console.log(id, html);
+        // update pad to db here
+      }, 2000) as unknown as string;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [update]);
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.clearContent();
+      editor.commands.setContent(content);
+      setTimeout(() => {
+        editor.commands.focus();
+      }, 200);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content]);
 
   return (
     <div className="tiptap-container">
+      <div className="header">
+        {editor && <MenuBar editor={editor} />}
+        <TittlePad />
+      </div>
       <EditorContent editor={editor} className="tiptap-main-content" />
-      <MenuBar editor={editor} />
     </div>
   );
 }
