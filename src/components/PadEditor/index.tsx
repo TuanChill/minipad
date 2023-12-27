@@ -7,12 +7,14 @@ import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
+import TaskItem from "@tiptap/extension-task-item";
 
-import { MenuBar } from "./MenuBar";
 import { useEffect, useState } from "react";
+import { MenuBar } from "./MenuBar";
 import TittlePad from "../../containers/Pads/TittlePad";
 import "./index.css";
 import "./editor.css"
+import TaskList from "@tiptap/extension-task-list";
 
 interface IPadEditor {
   id: string;
@@ -23,11 +25,18 @@ let timer = "none";
 
 const extensions = [
   StarterKit,
-  Highlight,
+  Highlight.configure({
+    multicolor: true,
+  }),
   Typography,
-  Youtube,
+  Youtube.configure({
+    inline: true,
+  }),
   Link.configure({ openOnClick: false }),
   Image,
+  // ListItem,
+  TaskItem,
+  TaskList,
   TextAlign,
   Underline,
 ];
@@ -73,7 +82,7 @@ export default function PadEditor({ id, content }: IPadEditor) {
       }, 200);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content]);
+  }, [editor]);
 
   return (
     <div className="tiptap-container">

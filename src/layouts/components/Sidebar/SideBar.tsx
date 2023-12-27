@@ -3,6 +3,7 @@ import UserInfo from "../../../components/UserInfo";
 import Header from "./Header";
 
 import "./index.css";
+import DocumentList from "../../../components/DocumentList";
 
 export default function SideBar() {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
@@ -48,6 +49,7 @@ export default function SideBar() {
     >
       <div className="app-sidebar-content" >
         <Header />
+        <DocumentList />
         <UserInfo />
       </div>
       <div className="app-sidebar-resizer" onMouseDown={startResizing} />

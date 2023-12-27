@@ -23,18 +23,17 @@ export const MenuBar = ({ editor }: IMenuBar) => {
     }
   };
 
-  //   const addYoutube = (e: ChangeEvent<HTMLInputElement>) => {
-  //     const url = e.target.value;
-  //     const youtubePattern =
-  //       /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]{11}$/;
-  //     if (e.key === "Enter") {
-  //       if (youtubePattern.test(url)) {
-  //         editor.commands.setYoutubeVideo({
-  //           src: url,
-  //         });
-  //       }
-  //     }
-  //   };
+  const addYoutube = () => {
+    const url = window.prompt("Nhập đường dẫn youtube");
+    const youtubePattern =
+      /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[\w-]{11}$/;
+    if (url != null && youtubePattern.test(url)) {
+      editor.commands.focus();
+      editor.commands.setYoutubeVideo({
+        src: url,
+      });
+    }
+  };
 
   const setLink = useCallback(() => {
     const href = editor?.getAttributes("link").href;
@@ -142,19 +141,33 @@ export const MenuBar = ({ editor }: IMenuBar) => {
         icon: "list-unordered",
         onClick: () => getFocus().toggleBulletList().run(),
         isActive: isActive("bulletList"),
-        description: "Chuyển đổi định dạng danh sách dấu đầu dòng",
+        description: "Định dạng danh sách dấu đầu dòng",
       },
       {
         icon: "list-ordered",
         onClick: () => getFocus().toggleOrderedList().run(),
         isActive: isActive("orderedList"),
-        description: "Chuyển đổi định dạng danh sách có số thứ tự",
+        description: "Danh sách công việc",
       },
+      {
+        icon: "list-check-3",
+        isActive: isActive("taskList"),
+        onClick: () => getFocus().toggleTaskList().run(),
+        description: "Định dạng danh sách có số thứ tự",
+      },
+    ],
+    [
       {
         icon: "separator",
         onClick: () => getFocus().setHorizontalRule().run(),
         isActive: "",
         description: "Chèn đường kẻ ngang",
+      },
+      {
+        icon: "mark-pen-fill",
+        onClick: () => getFocus().toggleHighlight({ color: '#ffcc00' }).run(),
+        isActive: isActive("highlight"),
+        description: "Đánh dấu đoạn văn",
       },
     ],
     [
@@ -183,8 +196,9 @@ export const MenuBar = ({ editor }: IMenuBar) => {
       },
       {
         icon: "youtube-line",
-        description: "Chèn video youtube"
-      }
+        onClick: addYoutube,
+        description: "Chèn video youtube",
+      },
     ],
   ];
 
@@ -213,7 +227,7 @@ export const MenuBar = ({ editor }: IMenuBar) => {
                   <button
                     key={item.icon}
                     className={`btn-item ${item?.isActive}`}
-                    onClick={item?.onClick}
+                    onClick={item.onClick}
                   >
                     <i className={`ri-${item.icon}`}></i>
                   </button>

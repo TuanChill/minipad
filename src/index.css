@@ -4,23 +4,37 @@
 @tailwind components;
 @tailwind utilities;
 
-
 *::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 body {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 @layer components {
-    .item-sidebar_hover {
-        @apply hover:bg-sidebar_hover;
-    }
+  .item-sidebar_hover {
+    @apply hover:bg-sidebar_hover;
+  }
+
+  .text-nobreak {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
-
 .bg-pattern-1 {
-    background-image: linear-gradient(45deg,#f0f0f0 25%,transparent 0,transparent 50%,#f0f0f0 0,#f0f0f0 75%,transparent 0,#fff);
-    background-size: 5px 5px;
+  background-image: linear-gradient(
+    45deg,
+    #f0f0f0 25%,
+    transparent 0,
+    transparent 50%,
+    #f0f0f0 0,
+    #f0f0f0 75%,
+    transparent 0,
+    #fff
+  );
+  background-size: 5px 5px;
 }
