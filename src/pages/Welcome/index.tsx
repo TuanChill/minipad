@@ -10,7 +10,7 @@ export default function Welcome() {
   return (
     <div>
       <Header navList={navList} />
-      <main className="mt-[70px]">
+      <main className="mt-[70px] box">
         <div>
           <img
             className="center"
