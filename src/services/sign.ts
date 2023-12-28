@@ -5,6 +5,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { GgProvider, auth } from "../libs/firebase";
 import { messageError, messageSuccess } from "../components/Message";
@@ -13,7 +14,8 @@ import { extractNameFromEmail, getUrlHost } from "../utils";
 import { IUser, createUser } from "./users";
 import { toTimestamp } from "../utils/date";
 
-const defaultAvatar = "https://firebasestorage.googleapis.com/v0/b/notion-6958d.appspot.com/o/avatars%2FdefaultAvt.png?alt=media&token=5a1eb34b-c9d1-493e-b708-158a4cc4b0d4"
+const defaultAvatar =
+  "https://firebasestorage.googleapis.com/v0/b/notion-6958d.appspot.com/o/avatars%2FdefaultAvt.png?alt=media&token=5a1eb34b-c9d1-493e-b708-158a4cc4b0d4";
 
 export const signIn = (email: string, password: string) => {
   //  sign in with email and password
@@ -77,8 +79,8 @@ export const signUp = (email: string, password: string) => {
     })
     .then(async (user) => {
       //  if create success user authen. save user info in docs
-      console.log(user)
-      if(user) {
+      console.log(user);
+      if (user) {
         await createUser({
           uid: user.uid,
           email: user.email,
@@ -87,14 +89,14 @@ export const signUp = (email: string, password: string) => {
           dateOfBirth: user.dateOfBirth ?? "",
           phoneNumber: user.phoneNumber ?? "",
           createAt: toTimestamp(new Date()),
-          updateAt: toTimestamp(new Date())
+          updateAt: toTimestamp(new Date()),
         });
       }
     })
     .catch((err) => {
       console.log(err);
       // messageError("")
-    })
+    });
 };
 
 export const verifyEmail = async () => {
@@ -127,9 +129,20 @@ export const resetPassword = (oobCode: string, newPassword: string) => {
     });
 };
 
+export const logOut = () => {
+  signOut(auth)
+    .then(() => {
+      // messageSuccess("Đăng xuất thành công");
+      console.log("Đăng xuất thành công")
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 // export const reauthenticate = () => {
 //   const user = auth.currentUser;
-//   let credential 
+//   let credential
 //   console.log(EmailAuthProvider)
 //   console.log(first)
 //   if(EmailAuthProvider) {

@@ -7,8 +7,8 @@ import Header from "../../layouts/components/Header";
 const navList = [
   // { title: "Trang chủ", path: "/" },
   { title: "Giới thiệu", path: "/#intro" },
-  { title: "Về chúng tôi", path: "/#about" },
   { title: "Khám phá", path: "/#source-code" },
+  { title: "Về chúng tôi", path: "/#about" },
   { title: "Ghi chú ngay", path: "/app/pad" },
   // { title: "Đăng ký", path: "/register" },
 ];

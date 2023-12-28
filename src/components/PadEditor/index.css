@@ -3,7 +3,7 @@
 }
 
 .tiptap-main-content {
-    @apply pt-[100px];
+    @apply pt-[110px];
 }
 
 .header {
@@ -18,13 +18,14 @@
 }
 
 .toolbar {
-    @apply flex justify-center rounded-md gap-2 flex-wrap;
+    @apply flex justify-center rounded-md gap-2 flex-nowrap;
     @apply px-4 py-2;
     /* @apply bg-gray-800; */
 }
 
 .group-item {
     @apply flex gap-2 text-black;
+    @apply text-xs;
 }
 
 /* .group-item~.group-item {
@@ -38,7 +39,7 @@
 }
 
 .btn-item.is-active {
-    @apply bg-yellow-300 text-black;
+    @apply bg-indigo-300 text-black;
 }
 
 .btn-item i {

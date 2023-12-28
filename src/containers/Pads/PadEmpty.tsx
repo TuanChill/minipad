@@ -1,6 +1,6 @@
 export default function PadEmpty() {
   return (
-    <div className="flex flex-col justify-center items-center h-full text-3xl">
+    <div className="flex flex-col justify-center items-center h-full text-3xl px-4 text-center select-none">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="#000000"
