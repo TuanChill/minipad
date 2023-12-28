@@ -22,6 +22,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-router-dom": "^6.15.0",
     "remixicon": "^3.5.0",
+    "yarn": "^1.22.21",
     "yup": "^1.2.0"
   },
   "devDependencies": {
