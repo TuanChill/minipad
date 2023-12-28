@@ -17,7 +17,7 @@ export default function LandingPage() {
   return (
     <div className="overflow-auto h-screen">
       <Header navList={navList} />
-      <main className="pt-4 mb-5 mx-2">
+      <main className="pt-4 mb-5 mx-2 font-Montserrat">
         <SectionScroll>
           <Intro />
           <SourceCode />

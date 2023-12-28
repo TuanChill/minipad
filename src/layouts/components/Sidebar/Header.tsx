@@ -2,12 +2,19 @@ import { Button } from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
 import Switch from "../../../components/Button/Switch";
 import { useRecoilState } from "recoil";
-import { IDocument, documentListState } from "../../../containers/PadStore/PadStore";
+import {
+  IDocument,
+  documentListState,
+} from "../../../containers/PadStore/PadStore";
 import { uuidGenerator } from "../../../utils";
 import { Timestamp } from "firebase/firestore";
 import { saveCurrentPad } from "../../../containers/localPad";
+import { createPad } from "../../../services/pad";
+import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
 export default function Header() {
+  const user = useCurrentUser();
+
   const navigate = useNavigate();
   const [pads, setPads] = useRecoilState(documentListState);
 
@@ -15,13 +22,21 @@ export default function Header() {
     const newPad: IDocument = {
       id: uuidGenerator(),
       createAt: Timestamp.now(),
+      updateAt: Timestamp.now(),
     };
     const newPads: IDocument[] = [...pads, newPad];
+    // set pad to state global state
     setPads(newPads);
-    navigate(`/app/pad/${newPad.id}`)
+    // turn on pad editor
+    navigate(`/app/pad/${newPad.id}`);
+    // save curr pad to local cache
     saveCurrentPad(newPad);
+    // save to db
+    user?.uid && createPad({
+      uid: user.uid,
+      title: ""
+    })
   };
-
 
   return (
     <div className="shadow-lg px-4 py-4 flex flex-col">

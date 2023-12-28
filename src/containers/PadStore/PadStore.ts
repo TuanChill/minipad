@@ -5,6 +5,7 @@ export interface IDocument {
   id: string;
   title?: string;
   createAt: Timestamp;
+  updateAt: Timestamp;
 }
 
 export const documentListState = atom({
