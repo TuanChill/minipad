@@ -22,6 +22,7 @@ export default function Header() {
     const newPad: IDocument = {
       id: uuidGenerator(),
       createAt: Timestamp.now(),
+      updateAt: Timestamp.now(),
     };
     const newPads: IDocument[] = [...pads, newPad];
     // set pad to state global state

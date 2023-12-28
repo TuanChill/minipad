@@ -62,10 +62,10 @@ export default function DocumentList() {
               </span>
             </div>
             <time
-              dateTime={toDateTime(pad.createAt)}
+              dateTime={toDateTime(pad.updateAt)}
               className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
             >
-              {toDateTime(pad.createAt)}
+              {toDateTime(pad.updateAt)}
             </time>
           </div>
         </li>

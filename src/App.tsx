@@ -4,6 +4,11 @@ import Login from "./pages/auth/Login";
 import Logout from "./pages/auth/Logout";
 import Register from "./pages/auth/Register";
 import LandingPage from "./pages/Landing";
+import ResetPassword from "./pages/auth/ResetPassword";
+import ProfileSetting from "./pages/auth/ProfileSetting";
+import PadContainer from "./containers/Pads/PadContainer";
+import PadEmpty from "./containers/Pads/PadEmpty";
+import CustomerSp from "./pages/CustomerSupport/CustomerSp";
 import AuthProvider from "./context/AuthProvider";
 import PrivateRoute from "./containers/PrivateRoute";
 import Pad from "./pages/Pad";
@@ -13,10 +18,6 @@ import LayoutAuth from "./layouts/LayoutAuth";
 
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
-import ResetPassword from "./pages/auth/ResetPassword";
-import ProfileSetting from "./pages/auth/ProfileSetting";
-import PadContainer from "./containers/Pads/PadContainer";
-import PadEmpty from "./containers/Pads/PadEmpty";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           />
 
           <Route path="/" element={<LandingPage />} />
+          <Route path="/contact-us" element={<CustomerSp/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>

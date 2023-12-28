@@ -36,6 +36,7 @@ export default function TittlePad() {
       id: pad.id,
       title: e.target.value,
       createAt: pad.createAt,
+      updateAt: pad.updateAt,
     });
   };
 

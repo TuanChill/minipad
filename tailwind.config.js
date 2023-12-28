@@ -18,6 +18,7 @@ export default {
       },
       fontFamily: {
         "logo": "Agbalumo",
+        "Montserrat": ["Montserrat"],
       }, 
       maxWidth: {
         "main": "80rem",

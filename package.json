@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@tippyjs/react": "^4.2.6",
     "@tiptap/extension-highlight": "^2.1.12",
     "@tiptap/extension-image": "^2.1.13",
