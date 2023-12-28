@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export function joinClasses(
   ...args: Array<string | boolean | null | undefined>
 ) {
@@ -50,3 +52,7 @@ export const extractNameFromEmail = (email: string) => {
 
   return email.substring(0, atIndex);
 };
+
+export const uuidGenerator = (): string => {
+  return uuidv4();
+}

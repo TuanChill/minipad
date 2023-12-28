@@ -15,6 +15,8 @@ import TittlePad from "../../containers/Pads/TittlePad";
 import "./index.css";
 import "./editor.css"
 import TaskList from "@tiptap/extension-task-list";
+import { useRecoilValue } from "recoil";
+import { editState } from "../../containers/PadStore/PadStore";
 
 interface IPadEditor {
   id: string;
@@ -42,6 +44,8 @@ const extensions = [
 ];
 
 export default function PadEditor({ id, content }: IPadEditor) {
+  const isEditable = useRecoilValue(editState);
+
   const [update, setUpdate] = useState(0);
 
   const editor = useEditor({
@@ -83,6 +87,12 @@ export default function PadEditor({ id, content }: IPadEditor) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor]);
+
+  useEffect(() => {
+    if (editor) {
+      editor.setEditable(isEditable)
+    }
+  }, [isEditable, editor])
 
   return (
     <div className="tiptap-container">
