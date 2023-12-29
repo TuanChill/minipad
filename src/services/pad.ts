@@ -1,9 +1,9 @@
 import { IDocument } from "../containers/PadStore/PadStore";
 import { db } from "../libs/firebase";
-import { uuidGenerator } from "../utils/index";
 import {
   Timestamp,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -29,6 +29,7 @@ export interface IUpdatePad {
 }
 
 export interface INewPad {
+  id: string;
   uid: string;
   title: string;
 }
@@ -47,8 +48,7 @@ export interface IUpdateTitle {
 
 // const COLLECTION_PADS = "pads";
 
-export const createPad = async ({ uid, title }: INewPad) => {
-  const id = uuidGenerator();
+export const createPad = async ({ uid, title, id }: INewPad) => {
   await setDoc(doc(db, uid, id), {
     id,
     title,
@@ -67,6 +67,7 @@ export const createPad = async ({ uid, title }: INewPad) => {
 export const saveContentById = async ({ uid, id, content }: IUpdateContent) => {
   await updateDoc(doc(db, uid, id), {
     content,
+    updateAt: Timestamp.now(),
   })
     .then(() => {
       console.log("Update content successfully");
@@ -78,7 +79,8 @@ export const saveContentById = async ({ uid, id, content }: IUpdateContent) => {
 
 export const saveTitleById = async ({uid, id, title}: IUpdateTitle) => {
   await updateDoc(doc(db, uid, id), {
-    title
+    title,
+    updateAt: Timestamp.now(),
   })
     .then(() => {
       console.log("Update title successfully");
@@ -121,3 +123,7 @@ export const getAllPadsByUid = async (uid: string) => {
 
   return pads;
 };
+
+export const delPadById =async ({uid, id}: {uid: string; id: string}) => {
+  await deleteDoc(doc(db, uid, id))
+}
