@@ -4,16 +4,19 @@ import {
   documentListState,
 } from "../../containers/PadStore/PadStore";
 import { useEffect, useState } from "react";
-import { getAllPadsByUid } from "../../services/pad";
+import { delPadById, getAllPadsByUid } from "../../services/pad";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { toDateTime } from "../../utils/date";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { saveCurrentPad } from "../../containers/localPad";
 import Spinner from "../Loading/Spinner";
+import Tippy from "@tippyjs/react";
+import { messageError, messageSuccess } from "../Message";
 
 export default function DocumentList() {
   const user = useCurrentUser();
   const navigate = useNavigate();
+  const { id } = useParams();
   const [isLoading, setLoading] = useState(false);
 
   const [pads, setPads] = useRecoilState(documentListState);
@@ -21,6 +24,33 @@ export default function DocumentList() {
   const openPadEditor = (pad: IDocument) => {
     navigate(`/app/pad/${pad.id}`);
     saveCurrentPad(pad);
+  };
+
+  const rmPadState = (id: string) => {
+    const newPads: IDocument[] = pads.filter((el: IDocument | undefined) => el?.id !== id);
+    setPads(newPads);
+  }
+
+  const delPad = async (id: string) => {
+    // confirm action
+    const confirm = window.confirm("Bạn chắc chắn muốn xoá ghi chú này không");
+    if (confirm && user?.uid) {
+      await delPadById({
+        uid: user.uid,
+        id,
+      })
+        .then(() => {
+          messageSuccess("Xoá ghi chú thành công");
+          rmPadState(id);
+        })
+        .catch(() => {
+          messageError("Vui lòng thử lại!!");
+        });
+    }
+  };
+
+  const openPadInNewTab = (id: string) => {
+    window.open(`/app/pad/${id}`, "_blank");
   };
 
   useEffect(() => {
@@ -36,7 +66,7 @@ export default function DocumentList() {
     };
 
     fetchPadsList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
@@ -45,7 +75,9 @@ export default function DocumentList() {
         <li
           key={Math.random()}
           onClick={() => openPadEditor(pad)}
-          className="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 cursor-pointer"
+          className={`relative bg-white py-5 px-4 hover:bg-gray-100 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 cursor-pointer ${
+            id == pad.id && "bg-gray-200"
+          }`}
         >
           <div className="flex justify-between space-x-3">
             <div className="min-w-0 flex-1">
@@ -67,6 +99,33 @@ export default function DocumentList() {
             >
               {toDateTime(pad.updateAt)}
             </time>
+            <Tippy
+              delay={100}
+              placement="bottom"
+              interactive={true}
+              content={
+                <div className="flex flex-col gap-1 rounded-md shadow-md border p-2 bg-white">
+                  <button
+                    onClick={() => delPad(pad.id)}
+                    className="flex items-center p-1 hover:bg-slate-200 rounded-sm px-2 py-1"
+                  >
+                    <i className="ri-delete-bin-line mr-2"></i>
+                    <span>Xoá</span>
+                  </button>
+                  <button
+                    onClick={() => openPadInNewTab(pad.id)}
+                    className="flex items-center p-1 hover:bg-slate-200 rounded-sm px-2 py-1"
+                  >
+                    <i className="ri-arrow-right-up-line mr-2"></i>
+                    <span>Mở trong tab mới</span>
+                  </button>
+                </div>
+              }
+            >
+              <button className="hover:bg-slate-200 rounded-sm relativ z-50">
+                <i className="ri-more-2-fill"></i>
+              </button>
+            </Tippy>
           </div>
         </li>
       ))}

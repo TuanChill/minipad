@@ -1,7 +1,7 @@
 import { Button } from "../../components/Button";
 import Header from "../../layouts/components/Header";
 import * as Yup from "yup";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { sendEmail } from "../../libs/mail";
 import { messageError, messageSuccess } from "../../components/Message";
 import { useFormik } from "formik";
@@ -27,6 +27,7 @@ const ContactForm = Yup.object().shape({
 
 export default function CustomerSp() {
   const form = useRef<HTMLFormElement>(null);
+  const [isDisable, setDisable] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -38,15 +39,18 @@ export default function CustomerSp() {
       // validate form
       ContactForm.validate(values, { abortEarly: false })
         .then(() => {
+          setDisable(true);
           // send email
           if (form.current) {
             sendEmail(form.current)
               .then(() => {
                 messageSuccess("Gửi Email thành công");
+                setDisable(false);
               })
               .catch((err) => {
                 messageError("Gửi Email thất bại");
                 console.log(err);
+                setDisable(false);
               });
           }
         })
@@ -115,6 +119,7 @@ export default function CustomerSp() {
             <Button
               className="block mt-8 bg-blue-600 text-white hover:bg-blue-700"
               text="Gửi tin nhắn"
+              disabled={isDisable}
               onClick={formik.handleSubmit}
             />
           </form>

@@ -4,6 +4,7 @@ import { uuidGenerator } from "../utils/index";
 import {
   Timestamp,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -123,3 +124,7 @@ export const getAllPadsByUid = async (uid: string) => {
 
   return pads;
 };
+
+export const delPadById =async ({uid, id}: {uid: string; id: string}) => {
+  await deleteDoc(doc(db, uid, id))
+}

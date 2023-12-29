@@ -32,7 +32,7 @@ export default function PadContainer() {
       {id && user?.uid ? (
         <div className="w-full h-full">
           {isLoading ? (
-            <LoadingIndicator className="w-full h-full" />
+            <LoadingIndicator className="w-full h-full opacity-40" />
           ) : (
             <PadEditor id={id} uid={user?.uid} content={content} />
           )}
