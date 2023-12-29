@@ -15,6 +15,8 @@ import Pad from "./pages/Pad";
 import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import LayoutAuth from "./layouts/LayoutAuth";
+import PadShare from "./containers/Pads/PadShare";
+import ShareView from "./layouts/ShareView";
 
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
@@ -34,6 +36,7 @@ function App() {
           </Route>
           {/*pad route  */}
           <Route path="/app">
+            {/* route to pad */}
             <Route element={<DefaultLayout />}>
               <Route
                 path="pad"
@@ -46,6 +49,11 @@ function App() {
                 <Route index element={<PadEmpty />} />
                 <Route path=":id" element={<PadContainer />} />
               </Route>
+            </Route>
+            {/* route to share */}
+            <Route path="share/:uid" element={<ShareView />}>
+              <Route index element={<NotFound />} />
+              <Route path=":id" element={<PadShare />} />
             </Route>
             <Route index element={<NotFound />} />
           </Route>
@@ -60,7 +68,7 @@ function App() {
           />
 
           <Route path="/" element={<LandingPage />} />
-          <Route path="/contact-us" element={<CustomerSp/>} />
+          <Route path="/contact-us" element={<CustomerSp />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>

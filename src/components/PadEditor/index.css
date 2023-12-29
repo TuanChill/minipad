@@ -6,6 +6,23 @@
     @apply pt-[110px];
 }
 
+.dlScrollbar::-webkit-scrollbar {
+    display: inline-block;
+}
+
+.dlScrollbar::-webkit-scrollbar {
+    width: 12px;
+}
+
+.dlScrollbar::-webkit-scrollbar-thumb {
+    background-color: #b4b4b4;
+    border-radius: 6px;
+}
+
+.dlScrollbar::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
 .header {
     @apply absolute top-0 z-40;
     @apply w-full;

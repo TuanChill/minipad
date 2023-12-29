@@ -111,7 +111,7 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
     <div className="tiptap-container">
       <div className="header">
         {editor && <MenuBar editor={editor} />}
-        <TittlePad />
+        <TittlePad isEdit={true} />
       </div>
       <EditorContent editor={editor} className="tiptap-main-content" />
     </div>

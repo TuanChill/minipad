@@ -9,7 +9,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 
 const EMPTY_TITLE = "Không có tiêu đề";
 
-export default function TittlePad() {
+export default function TittlePad({ isEdit }: { isEdit: boolean }) {
   const user = useCurrentUser();
   const pad = getCurrentPad();
   const [padList, setPadList] = useRecoilState(documentListState);
@@ -52,18 +52,19 @@ export default function TittlePad() {
     };
 
     saveTitlePad();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceVal]);
 
   useEffect(() => {
     setTitleVal(pad.title);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pad.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pad.id]);
 
   return (
     <div className="title-pad">
       <input
         type="text"
+        readOnly={!isEdit}
         className="focus:outline-none focus:border-none bg-inherit w-2/3"
         placeholder={EMPTY_TITLE}
         value={titleVal ?? ""}
