@@ -104,7 +104,7 @@ export default function DocumentList() {
               placement="bottom"
               interactive={true}
               content={
-                <div className="flex flex-col gap-1 rounded-md shadow-md border p-2 bg-white">
+                <div className="flex flex-col gap-1 rounded-md shadow-md border p-2 bg-white font-medium">
                   <button
                     onClick={() => delPad(pad.id)}
                     className="flex items-center p-1 hover:bg-slate-200 rounded-sm px-2 py-1"

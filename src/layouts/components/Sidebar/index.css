@@ -1,6 +1,6 @@
 .app-sidebar {
   @apply flex-shrink-0 flex flex-row;
-  @apply min-w-[300px] max-w-[500px];
+  @apply min-w-[200px] max-w-[500px];
   @apply bg-white border-r border-gray-300 shadow-lg rounded-l-3xl z-20;
 }
 

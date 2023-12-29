@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import UserInfo from "../../../components/UserInfo";
 import Header from "./Header";
+import DocumentList from "../../../components/DocumentList";
+import useWindowDimensions from "../../../hooks/useWindowDemensions";
 
 import "./index.css";
-import DocumentList from "../../../components/DocumentList";
 
 export default function SideBar() {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(300);
+
+  const {width} = useWindowDimensions();
 
   const startResizing = useCallback(() => {
     setIsResizing(true);
@@ -39,6 +42,12 @@ export default function SideBar() {
       window.removeEventListener("mouseup", stopResizing);
     };
   }, [resize, stopResizing]);
+
+  useEffect(() => {
+    if(width < 1200) {
+      setSidebarWidth(250);
+    }
+  }, [width])
   
   return (
     <div
@@ -52,7 +61,7 @@ export default function SideBar() {
         <DocumentList />
         <UserInfo />
       </div>
-      <div className="app-sidebar-resizer" onMouseDown={startResizing} />
+      <div className={`app-sidebar-resizer ${width < 1240 && "hidden"}`} onMouseDown={startResizing} />
     </div>
   );
 }

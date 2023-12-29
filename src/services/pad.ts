@@ -1,6 +1,5 @@
 import { IDocument } from "../containers/PadStore/PadStore";
 import { db } from "../libs/firebase";
-import { uuidGenerator } from "../utils/index";
 import {
   Timestamp,
   collection,
@@ -30,6 +29,7 @@ export interface IUpdatePad {
 }
 
 export interface INewPad {
+  id: string;
   uid: string;
   title: string;
 }
@@ -48,8 +48,7 @@ export interface IUpdateTitle {
 
 // const COLLECTION_PADS = "pads";
 
-export const createPad = async ({ uid, title }: INewPad) => {
-  const id = uuidGenerator();
+export const createPad = async ({ uid, title, id }: INewPad) => {
   await setDoc(doc(db, uid, id), {
     id,
     title,

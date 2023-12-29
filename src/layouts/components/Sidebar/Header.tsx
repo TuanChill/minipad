@@ -18,7 +18,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [pads, setPads] = useRecoilState(documentListState);
 
-  const addNewPad = () => {
+  const addNewPad = async () => {
     const newPad: IDocument = {
       id: uuidGenerator(),
       createAt: Timestamp.now(),
@@ -27,15 +27,17 @@ export default function Header() {
     const newPads: IDocument[] = [...pads, newPad];
     // set pad to state global state
     setPads(newPads);
+    // save to db
+    user?.uid &&
+      (await createPad({
+        uid: user.uid,
+        id: newPad.id,
+        title: "",
+      }));
     // turn on pad editor
     navigate(`/app/pad/${newPad.id}`);
     // save curr pad to local cache
     saveCurrentPad(newPad);
-    // save to db
-    user?.uid && createPad({
-      uid: user.uid,
-      title: ""
-    })
   };
 
   return (
