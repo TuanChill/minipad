@@ -1,4 +1,5 @@
 import About from "../../containers/SectionLanding/About";
+import Donate from "../../containers/SectionLanding/Donate";
 import Intro from "../../containers/SectionLanding/Intro";
 import SourceCode from "../../containers/SectionLanding/SourceCode";
 import SectionScroll from "../../context/SectionScroll";
@@ -22,6 +23,7 @@ export default function LandingPage() {
           <Intro />
           <SourceCode />
           <About />
+          <Donate />
         </SectionScroll>
       </main>
     </div>

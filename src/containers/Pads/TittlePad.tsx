@@ -6,15 +6,24 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { saveTitleById } from "../../services/pad";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useDebounce } from "../../hooks/useDebounce";
+import Tippy from "@tippyjs/react";
+import { messageSuccess } from "../../components/Message";
 
 const EMPTY_TITLE = "Không có tiêu đề";
 
-export default function TittlePad() {
+export default function TittlePad({ isEdit }: { isEdit: boolean }) {
   const user = useCurrentUser();
   const pad = getCurrentPad();
   const [padList, setPadList] = useRecoilState(documentListState);
   const [titleVal, setTitleVal] = useState(pad.title);
   const debounceVal = useDebounce(titleVal, 3000);
+
+  const shareLink = `https://www.minipad.software/app/share/${user?.uid}/${pad.id}`;
+
+  const copyToClipBoard = () => {
+    navigator.clipboard.writeText(shareLink);
+    messageSuccess("Copy link thành công");
+  };
 
   const changeTitlePad = async (e: ChangeEvent<HTMLInputElement>) => {
     setTitleVal(e.target.value);
@@ -52,26 +61,52 @@ export default function TittlePad() {
     };
 
     saveTitlePad();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceVal]);
 
   useEffect(() => {
     setTitleVal(pad.title);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pad.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pad.id]);
 
   return (
     <div className="title-pad">
       <input
         type="text"
+        readOnly={!isEdit}
         className="focus:outline-none focus:border-none bg-inherit w-2/3"
         placeholder={EMPTY_TITLE}
         value={titleVal ?? ""}
         onChange={(e) => changeTitlePad(e)}
       />
-      <span className="text-xs">{`Thời gian tạo: ${toDateTime(
-        pad.createAt
-      )}`}</span>
+      <div className="">
+        <span className="text-xs">{`Thời gian tạo: ${toDateTime(
+          pad.createAt
+        )}`}</span>
+        <Tippy
+          placement="bottom"
+          delay={500}
+          interactive
+          content={
+            <div
+              className="shadow-md rounded-md p-2 border bg-white"
+              onClick={copyToClipBoard}
+            >
+              <input
+                type="text"
+                className="focus:outline-none text-black text-xs mr-4"
+                readOnly
+                value={shareLink}
+              />
+              <i className="ri-file-copy-line text-black cursor-pointer"></i>
+            </div>
+          }
+        >
+          <button className="ml-4 text-blue-500">
+            <i className="ri-user-shared-2-line"></i>
+          </button>
+        </Tippy>
+      </div>
     </div>
   );
 }
