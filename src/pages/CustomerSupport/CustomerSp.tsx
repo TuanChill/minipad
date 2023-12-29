@@ -109,6 +109,7 @@ export default function CustomerSp() {
                   value={formik.values.message}
                   onChange={formik.handleChange}
                 />
+                <p className="text-sm text-red-400 mt-1 font-medium">{formik.errors.message}</p>
               </article>
             </div>
             <Button

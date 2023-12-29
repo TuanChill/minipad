@@ -1,15 +1,42 @@
 import { useParams } from "react-router-dom";
 import PadEditor from "../../components/PadEditor";
-
-export const defContent = "<h1>Hãy bắt đầu ghi chú ngay thôi nào!!!</h1>" ;
+import { useEffect, useState } from "react";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { getPadById } from "../../services/pad";
+import LoadingIndicator from "../../components/Loading/LoadingIndicator";
 
 export default function PadContainer() {
   const { id } = useParams();
+  const user = useCurrentUser();
+  const [content, setContent] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      if (user?.uid && id) {
+        setLoading(true);
+        const pad = await getPadById({
+          uid: user.uid,
+          id,
+        });
+        console.log(pad);
+        await setContent(pad?.content ?? "");
+        setLoading(false);
+      }
+    };
+    fetchContent();
+  }, [id, user?.uid]);
 
   return (
     <>
-      {id ? (
-        <PadEditor id={id} content={defContent} />
+      {id && user?.uid ? (
+        <div className="w-full h-full">
+          {isLoading ? (
+            <LoadingIndicator className="w-full h-full" />
+          ) : (
+            <PadEditor id={id} uid={user?.uid} content={content} />
+          )}
+        </div>
       ) : null}
     </>
   );

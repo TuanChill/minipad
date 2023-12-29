@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
@@ -8,18 +9,19 @@ import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import TaskItem from "@tiptap/extension-task-item";
-
-import { useEffect, useState } from "react";
+import TaskList from "@tiptap/extension-task-list";
 import { MenuBar } from "./MenuBar";
 import TittlePad from "../../containers/Pads/TittlePad";
-import "./index.css";
-import "./editor.css"
-import TaskList from "@tiptap/extension-task-list";
 import { useRecoilValue } from "recoil";
 import { editState } from "../../containers/PadStore/PadStore";
+import { saveContentById } from "../../services/pad";
+
+import "./index.css";
+import "./editor.css";
 
 interface IPadEditor {
   id: string;
+  uid: string;
   content: string;
 }
 
@@ -39,13 +41,14 @@ const extensions = [
   // ListItem,
   TaskItem,
   TaskList,
-  TextAlign,
+  TextAlign.configure({
+    types: ["heading", "paragraph"],
+  }),
   Underline,
 ];
 
-export default function PadEditor({ id, content }: IPadEditor) {
+export default function PadEditor({ id, uid, content }: IPadEditor) {
   const isEditable = useRecoilValue(editState);
-
   const [update, setUpdate] = useState(0);
 
   const editor = useEditor({
@@ -64,35 +67,45 @@ export default function PadEditor({ id, content }: IPadEditor) {
 
   useEffect(() => {
     if (editor) {
+      // reset func
       if (timer) {
         clearTimeout(timer);
       }
 
-      timer = setTimeout(() => {
+      // debounce
+      timer = setTimeout(async () => {
         const html = editor.getHTML();
-        console.log(id, html);
+        if (uid) {
+          await saveContentById({
+            uid,
+            id,
+            content: html,
+          });
+        }
         // update pad to db here
       }, 2000) as unknown as string;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update]);
 
+  //  focus editor when editor change
   useEffect(() => {
     if (editor) {
-      editor.commands.clearContent();
+      // editor.commands.clearContent();
       editor.commands.setContent(content);
       setTimeout(() => {
         editor.commands.focus();
       }, 200);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor]);
+  }, [editor, id]);
 
+  // set is editor for editor
   useEffect(() => {
     if (editor) {
-      editor.setEditable(isEditable)
+      editor.setEditable(isEditable);
     }
-  }, [isEditable, editor])
+  }, [isEditable, editor]);
 
   return (
     <div className="tiptap-container">

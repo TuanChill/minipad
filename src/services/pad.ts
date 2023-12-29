@@ -67,6 +67,7 @@ export const createPad = async ({ uid, title }: INewPad) => {
 export const saveContentById = async ({ uid, id, content }: IUpdateContent) => {
   await updateDoc(doc(db, uid, id), {
     content,
+    updateAt: Timestamp.now(),
   })
     .then(() => {
       console.log("Update content successfully");
@@ -78,7 +79,8 @@ export const saveContentById = async ({ uid, id, content }: IUpdateContent) => {
 
 export const saveTitleById = async ({uid, id, title}: IUpdateTitle) => {
   await updateDoc(doc(db, uid, id), {
-    title
+    title,
+    updateAt: Timestamp.now(),
   })
     .then(() => {
       console.log("Update title successfully");
