@@ -2,6 +2,10 @@ import { Editor } from "@tiptap/react";
 import { ChangeEvent, useCallback, useRef } from "react";
 import Tippy from "@tippyjs/react";
 import "./index.css";
+import { useParams } from "react-router-dom";
+import { uploadImgInPad } from "../../services/pad";
+import { messageError } from "../Message";
+import { getImgUrl } from "../../services/fileAvt";
 
 interface IMenuBar {
   editor: Editor;
@@ -26,6 +30,8 @@ interface MenuItemWithoutTitle {
 type MenuItem = MenuItemWithTitle | MenuItemWithoutTitle;
 
 export const MenuBar = ({ editor }: IMenuBar) => {
+  const { id } = useParams();
+
   const getFocus = () => editor.chain().focus();
   const isActive = (type: string, options?: unknown) => {
     return editor?.isActive(type, options ?? {}) ? "is-active" : " ";
@@ -59,13 +65,26 @@ export const MenuBar = ({ editor }: IMenuBar) => {
   }, [editor]);
 
   const showImg = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
+    async (e: ChangeEvent<HTMLInputElement>) => {
       const img = e.target.files?.[0];
-      if (img) {
+      if (img && id) {
         const imgUrl = URL.createObjectURL(img);
-        editor.chain().focus().setImage({ src: imgUrl }).run();
+        await uploadImgInPad(img, id)
+          .then((snap) => {
+            const pathImg = snap.metadata.fullPath;
+            return getImgUrl(pathImg);
+          })
+          .then((path) => {
+            editor.chain().focus().setImage({ src: path }).run();
+          })
+          .catch((err) => {
+            editor.chain().focus().setImage({ src: imgUrl }).run();
+            console.log(err);
+            messageError("Lưu ảnh thất bại");
+          });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [editor]
   );
 
