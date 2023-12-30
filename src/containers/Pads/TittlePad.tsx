@@ -102,7 +102,7 @@ export default function TittlePad({ isEdit }: { isEdit: boolean }) {
             </div>
           }
         >
-          <button className="ml-4 text-blue-500">
+          <button onClick={copyToClipBoard} className="ml-4 text-blue-500">
             <i className="ri-user-shared-2-line"></i>
           </button>
         </Tippy>
