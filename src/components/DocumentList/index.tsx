@@ -4,7 +4,11 @@ import {
   documentListState,
 } from "../../containers/PadStore/PadStore";
 import { useEffect, useState } from "react";
-import { delPadById, getAllPadsByUid } from "../../services/pad";
+import {
+  delPadById,
+  deleteFolderImg,
+  getAllPadsByUid,
+} from "../../services/pad";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { toDateTime } from "../../utils/date";
 import { useNavigate, useParams } from "react-router-dom";
@@ -27,18 +31,23 @@ export default function DocumentList() {
   };
 
   const rmPadState = (id: string) => {
-    const newPads: IDocument[] = pads.filter((el: IDocument | undefined) => el?.id !== id);
+    const newPads: IDocument[] = pads.filter(
+      (el: IDocument | undefined) => el?.id !== id
+    );
     setPads(newPads);
-  }
+  };
 
   const delPad = async (id: string) => {
     // confirm action
     const confirm = window.confirm("Bạn chắc chắn muốn xoá ghi chú này không");
     if (confirm && user?.uid) {
-      await delPadById({
-        uid: user.uid,
-        id,
-      })
+      Promise.all([
+        delPadById({
+          uid: user.uid,
+          id,
+        }),
+        deleteFolderImg(id),
+      ])
         .then(() => {
           messageSuccess("Xoá ghi chú thành công");
           rmPadState(id);
@@ -68,6 +77,15 @@ export default function DocumentList() {
     fetchPadsList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  // compare id in param with pads
+  useEffect(() => {
+    const found = pads.find((el) => el.id === id);
+    if (found) {
+      navigate("/app/pad");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pads.length]);
 
   return (
     <ul className="divide-y divide-gray-200 overflow-y-scroll h-full mb-14">

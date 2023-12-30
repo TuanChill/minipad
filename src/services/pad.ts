@@ -1,5 +1,6 @@
+import { deleteObject, listAll, ref, uploadBytes } from "firebase/storage";
 import { IDocument } from "../containers/PadStore/PadStore";
-import { db } from "../libs/firebase";
+import { db, storage } from "../libs/firebase";
 import {
   Timestamp,
   collection,
@@ -10,6 +11,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { uuidGenerator } from "../utils";
 
 export interface IPad {
   id?: string;
@@ -126,4 +128,22 @@ export const getAllPadsByUid = async (uid: string) => {
 
 export const delPadById =async ({uid, id}: {uid: string; id: string}) => {
   await deleteDoc(doc(db, uid, id))
+}
+
+
+export const uploadImgInPad = async (ImgFile: File, id: string) => {
+  const uuid = uuidGenerator();
+
+  const imgRef = await ref(storage, `pad-${id}/${uuid}`);
+  return uploadBytes(imgRef, ImgFile);
+}
+
+// deleteFolderInStorage
+export const deleteFolderImg = async (id: string) => {
+  const folderRef = ref(storage, `pad-${id}`);
+  listAll(folderRef).then((res) => {
+    res.items.forEach((itemRef) => {
+      deleteObject(itemRef);
+    });
+  });
 }

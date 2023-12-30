@@ -126,7 +126,7 @@ export default function CustomerSp() {
           <img
             src="https://firebasestorage.googleapis.com/v0/b/notion-6958d.appspot.com/o/4141232.jpg?alt=media&token=20096dae-2276-4508-aaca-5f7dff81b324"
             alt="Send email to us"
-            className="hidden lg:block rounded-md mt-10"
+            className="hidden lg:block rounded-md mt-5"
           />
         </div>
       </div>

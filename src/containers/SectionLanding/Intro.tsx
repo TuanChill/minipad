@@ -22,7 +22,7 @@ export default function Intro() {
             <Button
               iconRight={<i className="ri-arrow-right-line ml-1"></i>}
               text="Ghi chú ngay"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/app/pad")}
               className="w-fit mx-auto bg-slate-800 text-white px-3 py-2 font-semibold hover:bg-slate-700"
             />
           </div>

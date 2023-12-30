@@ -54,7 +54,7 @@ export default function PadContent({ id, content }: IPadShare) {
   }, [id, editor]);
 
   return (
-    <div className="tiptap-container h-full dlScrollbar">
+    <div className="tiptap-container h-full">
       <EditorContent editor={editor} className="tiptap-main-content pt-6" />
     </div>
   );

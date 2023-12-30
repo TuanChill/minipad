@@ -20,6 +20,7 @@ import ShareView from "./layouts/ShareView";
 
 import "remixicon/fonts/remixicon.css";
 import "./index.css";
+import CheckMobile from "./containers/CheckMobile";
 
 function App() {
   return (
@@ -37,17 +38,19 @@ function App() {
           {/*pad route  */}
           <Route path="/app">
             {/* route to pad */}
-            <Route element={<DefaultLayout />}>
-              <Route
-                path="pad"
-                element={
-                  <PrivateRoute>
-                    <Pad />
-                  </PrivateRoute>
-                }
-              >
-                <Route index element={<PadEmpty />} />
-                <Route path=":id" element={<PadContainer />} />
+            <Route element={<CheckMobile />}>
+              <Route element={<DefaultLayout />}>
+                <Route
+                  path="pad"
+                  element={
+                    <PrivateRoute>
+                      <Pad />
+                    </PrivateRoute>
+                  }
+                >
+                  <Route index element={<PadEmpty />} />
+                  <Route path=":id" element={<PadContainer />} />
+                </Route>
               </Route>
             </Route>
             {/* route to share */}
