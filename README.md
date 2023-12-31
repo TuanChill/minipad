@@ -73,6 +73,15 @@ project/
   ├── public/            # Public assets
   ├── src/               # Application source code
   │   ├── components/    # React components
+  │   ├── services/      # Services (Firebase)
+  │   ├── styles/        # Global styles
+  │   ├── utils/         # Utility classes and functions
+  │   ├── libs/          # Third-party libraries configuration
+  │   ├── pages/         # Pages 
+  │   ├── hooks/         # Custom hooks
+  │   ├── layouts/       # Layout components
+  │   ├── context/       # Contexts (React Context API)
+  │   ├── containers/    # Container components
   │   ├── App.tsx        # Application entry point
   │   ├── index.css      # Global css
   │   └── index.tsx      # Main rendering file
