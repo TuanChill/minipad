@@ -79,13 +79,13 @@ export default function DocumentList() {
   }, [user]);
 
   // compare id in param with pads
-  useEffect(() => {
-    const found = pads.find((el) => el.id === id);
-    if (found) {
-      navigate("/app/pad");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pads.length]);
+  // useEffect(() => {
+  //   const found = pads.find((el) => el.id === id);
+  //   if (found) {
+  //     navigate("/app/pad");
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [pads.length]);
 
   return (
     <ul className="divide-y divide-gray-200 overflow-y-scroll h-full mb-14">
