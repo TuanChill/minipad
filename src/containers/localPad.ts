@@ -7,6 +7,10 @@ export const saveCurrentPad = (pad: IDocument) => {
   setCache(CURRENT_PAD, pad);
 };
 
+export const removeCurrentPad = () => {
+  setCache(CURRENT_PAD, null);
+};
+
 export const getCurrentPad = () => {
   return getCacheJson(CURRENT_PAD) as IDocument;
 };
