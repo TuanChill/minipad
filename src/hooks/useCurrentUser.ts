@@ -15,6 +15,8 @@ export const useCurrentUser = (): IUser | null  => {
         } as IUser
         setInfo(nUser)
       });
+    } else {
+      setInfo(null);
     }
   }, [user]);
 

@@ -2,8 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo";
 import useWindowDimensions from "../../hooks/useWindowDemensions";
 import Tippy from "@tippyjs/react";
-import { getAuthCache } from "../../containers/localAuth";
-import { isEmptyObject } from "../../utils";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 interface NavItem {
   title: string;
@@ -18,7 +17,7 @@ interface IPropsHeader {
 export default function Header({ navList, className }: IPropsHeader) {
   const navigate = useNavigate();
 
-  const user = getAuthCache();
+  const user = useCurrentUser();
   const { width } = useWindowDimensions();
   return (
     <div
@@ -48,7 +47,7 @@ export default function Header({ navList, className }: IPropsHeader) {
             Ghi chú ngay
           </Link>
         )}
-        {!isEmptyObject(user) && (
+        {user && (
           <Tippy
             arrow={true}
             delay={100}

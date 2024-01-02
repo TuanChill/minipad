@@ -15,10 +15,10 @@ export default function TittlePad({ isEdit }: { isEdit: boolean }) {
   const user = useCurrentUser();
   const pad = getCurrentPad();
   const [padList, setPadList] = useRecoilState(documentListState);
-  const [titleVal, setTitleVal] = useState(pad.title);
-  const debounceVal = useDebounce(titleVal, 3000);
+  const [titleVal, setTitleVal] = useState(pad?.title);
+  const debounceVal = useDebounce(titleVal, 2000);
 
-  const shareLink = `https://www.minipad.software/app/share/${user?.uid}/${pad.id}`;
+  const shareLink = `https://www.minipad.software/app/share/${user?.uid}/${pad?.id}`;
 
   const copyToClipBoard = () => {
     navigator.clipboard.writeText(shareLink);
@@ -65,11 +65,11 @@ export default function TittlePad({ isEdit }: { isEdit: boolean }) {
   }, [debounceVal]);
 
   useEffect(() => {
-    setTitleVal(pad.title);
+    setTitleVal(pad?.title);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pad.id]);
+  }, [pad?.id]);
 
-  return (
+  return pad ? (
     <div className="title-pad">
       <input
         type="text"
@@ -81,7 +81,7 @@ export default function TittlePad({ isEdit }: { isEdit: boolean }) {
       />
       <div className="">
         <span className="text-xs">{`Thời gian tạo: ${toDateTime(
-          pad.createAt
+          pad?.createAt
         )}`}</span>
         <Tippy
           placement="bottom"
@@ -108,5 +108,5 @@ export default function TittlePad({ isEdit }: { isEdit: boolean }) {
         </Tippy>
       </div>
     </div>
-  );
+  ) : null;
 }

@@ -12,7 +12,7 @@ import {
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { toDateTime } from "../../utils/date";
 import { useNavigate, useParams } from "react-router-dom";
-import { saveCurrentPad } from "../../containers/localPad";
+import { removeCurrentPad, saveCurrentPad } from "../../containers/localPad";
 import Spinner from "../Loading/Spinner";
 import Tippy from "@tippyjs/react";
 import { messageError, messageSuccess } from "../Message";
@@ -37,20 +37,24 @@ export default function DocumentList() {
     setPads(newPads);
   };
 
-  const delPad = async (id: string) => {
+  const delPad = async (idPad: string) => {
     // confirm action
     const confirm = window.confirm("Bạn chắc chắn muốn xoá ghi chú này không");
     if (confirm && user?.uid) {
       Promise.all([
         delPadById({
           uid: user.uid,
-          id,
+          id: idPad,
         }),
-        deleteFolderImg(id),
+        deleteFolderImg(idPad),
       ])
         .then(() => {
           messageSuccess("Xoá ghi chú thành công");
-          rmPadState(id);
+          if(id === idPad) {
+            removeCurrentPad();
+            navigate("/app/pad")
+          }
+          rmPadState(idPad);
         })
         .catch(() => {
           messageError("Vui lòng thử lại!!");
@@ -91,10 +95,10 @@ export default function DocumentList() {
     <ul className="divide-y divide-gray-200 overflow-y-scroll h-full mb-14">
       {pads.map((pad) => (
         <li
-          key={Math.random()}
+          key={pad.id}
           onClick={() => openPadEditor(pad)}
-          className={`relative bg-white py-5 px-4 hover:bg-gray-100 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 cursor-pointer ${
-            id == pad.id && "bg-gray-200"
+          className={`relative bg-white py-5 px-4 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 cursor-pointer ${
+            id == pad.id && "bg-slate-400"
           }`}
         >
           <div className="flex justify-between space-x-3">
