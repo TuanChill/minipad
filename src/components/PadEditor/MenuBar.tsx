@@ -32,6 +32,8 @@ type MenuItem = MenuItemWithTitle | MenuItemWithoutTitle;
 export const MenuBar = ({ editor }: IMenuBar) => {
   const { id } = useParams();
 
+  console.log(editor);
+
   const getFocus = () => editor.chain().focus();
   const isActive = (type: string, options?: unknown) => {
     return editor?.isActive(type, options ?? {}) ? "is-active" : " ";
@@ -232,7 +234,7 @@ export const MenuBar = ({ editor }: IMenuBar) => {
       {menus.map((group, i) => {
         // check group tool
         return group[0]?.title ? (
-          <div key={Math.random()} className="">
+          <div key={i} className="">
             <Tippy
               interactive={true}
               placement="bottom"
@@ -242,7 +244,10 @@ export const MenuBar = ({ editor }: IMenuBar) => {
                     <button
                       key={e.icon}
                       className={`btn-item hover:bg-slate-200 ${e?.isActive}`}
-                      onClick={e.onClick}
+                      onClick={async () => {
+                        await editor.commands.focus();
+                        e.onClick;
+                      }}
                     >
                       <i className={`ri-${e.icon}`}></i>
                     </button>
@@ -263,7 +268,7 @@ export const MenuBar = ({ editor }: IMenuBar) => {
             {group.map((item) => {
               return (
                 <Tippy
-                  key={Math.random()}
+                  key={item.icon}
                   interactive={true}
                   placement="bottom"
                   content={

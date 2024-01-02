@@ -95,7 +95,7 @@ export default function DocumentList() {
     <ul className="divide-y divide-gray-200 overflow-y-scroll h-full mb-14">
       {pads.map((pad) => (
         <li
-          key={Math.random()}
+          key={pad.id}
           onClick={() => openPadEditor(pad)}
           className={`relative bg-white py-5 px-4 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 cursor-pointer ${
             id == pad.id && "bg-slate-400"
