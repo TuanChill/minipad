@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { IPad, getPadById } from "../../services/pad";
 import TitlePadShare from "../../layouts/ShareView/TitlePadShare";
 import LoadingIndicator from "../../components/Loading/LoadingIndicator";
+import { decryptPad } from "../../libs/crypt";
 
 export default function PadShare() {
   const { uid, id } = useParams();
@@ -28,11 +29,15 @@ export default function PadShare() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  return id && !isLoading ? (
+  const getContent = (content: string, uid: string) => {
+    return decryptPad(content, uid);
+  };
+
+  return id && uid && !isLoading ? (
     pad ? (
       <div>
         <TitlePadShare title={pad.title} createAt={pad.createAt} />
-        <PadContent id={id} content={pad.content} />
+        <PadContent id={id} content={getContent(pad.content, uid)} />
       </div>
     ) : (
       <div className="flex flex-col items-center text-center px-3">

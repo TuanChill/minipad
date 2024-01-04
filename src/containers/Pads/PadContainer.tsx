@@ -26,21 +26,20 @@ export default function PadContainer() {
         if (pad) {
           await setPad(pad);
         } else {
-            // messageError("Lỗi tải ghi chú");
-            navigate("/app/pad");
+          // messageError("Lỗi tải ghi chú");
+          navigate("/app/pad");
         }
 
         setLoading(false);
       }
     };
     fetchContent();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, user?.uid]);
 
   const getContent = (pad: IPad, uid: string) => {
     return decryptPad(pad.content, uid);
-    
-  } 
+  };
 
   return (
     <>
@@ -49,7 +48,11 @@ export default function PadContainer() {
           {isLoading ? (
             <LoadingIndicator className="w-full h-full opacity-50" />
           ) : (
-            <PadEditor id={id} uid={user?.uid} content={getContent(pad, user.uid)} />
+            <PadEditor
+              id={id}
+              uid={user?.uid}
+              content={getContent(pad, user.uid)}
+            />
           )}
         </div>
       ) : null}
