@@ -18,6 +18,7 @@ import { saveContentById } from "../../services/pad";
 
 import "./index.css";
 import "./editor.css";
+import { encryptPad } from "../../libs/crypt";
 
 interface IPadEditor {
   id: string;
@@ -74,16 +75,19 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
 
       // debounce
       timer = setTimeout(async () => {
+        // encrypt content
+        //save content
         const html = editor.getHTML();
-        if (uid) {
-          await saveContentById({
-            uid,
-            id,
-            content: html,
-          });
-        }
+        const cipherText = encryptPad(html, uid);
+        // console.log(html);
+        // console.log(cipherText);
+        await saveContentById({
+          uid,
+          id,
+          content: cipherText,
+        });
         // update pad to db here
-      }, 2000) as unknown as string;
+      }, 800) as unknown as string;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update]);

@@ -54,7 +54,7 @@ export const createPad = async ({ uid, title, id }: INewPad) => {
   await setDoc(doc(db, uid, id), {
     id,
     title,
-    content: "<h1>Hãy bắt đầu ghi chú ngay thôi nào!!!</h1>",
+    content: "",
     updateAt: Timestamp.now(),
     createAt: Timestamp.now(),
   })

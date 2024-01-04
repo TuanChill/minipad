@@ -32,8 +32,6 @@ type MenuItem = MenuItemWithTitle | MenuItemWithoutTitle;
 export const MenuBar = ({ editor }: IMenuBar) => {
   const { id } = useParams();
 
-  console.log(editor);
-
   const getFocus = () => editor.chain().focus();
   const isActive = (type: string, options?: unknown) => {
     return editor?.isActive(type, options ?? {}) ? "is-active" : " ";
