@@ -3,7 +3,7 @@
 }
 
 .tiptap-main-content {
-    @apply pt-[110px];
+    @apply pt-[110px] h-full;
 }
 
 .dlScrollbar::-webkit-scrollbar {

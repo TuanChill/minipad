@@ -97,9 +97,9 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
     if (editor) {
       // editor.commands.clearContent();
       editor.commands.setContent(content);
-      setTimeout(() => {
-        editor.commands.focus();
-      }, 200);
+      // setTimeout(() => {
+      //   editor.commands.focus();
+      // }, 200);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, id]);
@@ -117,7 +117,12 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
         {editor && <MenuBar editor={editor} />}
         <TittlePad isEdit={true} />
       </div>
-      <EditorContent editor={editor} className="tiptap-main-content" />
+      <div
+        onClick={() => editor?.commands.focus()}
+        className="tiptap-main-content"
+      >
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }
