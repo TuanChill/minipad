@@ -19,6 +19,8 @@ import { saveContentById } from "../../services/pad";
 import "./index.css";
 import "./editor.css";
 import { encryptPad } from "../../libs/crypt";
+import FontFamily from "@tiptap/extension-font-family";
+import TextStyle from "@tiptap/extension-text-style";
 
 interface IPadEditor {
   id: string;
@@ -46,6 +48,8 @@ const extensions = [
     types: ["heading", "paragraph"],
   }),
   Underline,
+  FontFamily,
+  TextStyle,
 ];
 
 export default function PadEditor({ id, uid, content }: IPadEditor) {
@@ -58,6 +62,7 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
       attributes: {
         class:
           "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none m-auto",
+          FontFamily: "Arial"
       },
     },
     content: content,

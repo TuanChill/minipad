@@ -12,6 +12,7 @@
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
     "@tippyjs/react": "^4.2.6",
+    "@tiptap/extension-font-family": "^2.1.13",
     "@tiptap/extension-highlight": "^2.1.12",
     "@tiptap/extension-image": "^2.1.13",
     "@tiptap/extension-link": "^2.1.13",
@@ -20,6 +21,7 @@
     "@tiptap/extension-task-item": "^2.1.13",
     "@tiptap/extension-task-list": "^2.1.13",
     "@tiptap/extension-text-align": "^2.1.13",
+    "@tiptap/extension-text-style": "^2.1.13",
     "@tiptap/extension-typography": "^2.1.12",
     "@tiptap/extension-underline": "^2.1.13",
     "@tiptap/extension-youtube": "^2.1.13",

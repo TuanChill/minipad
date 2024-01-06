@@ -1,11 +1,13 @@
 import { Editor } from "@tiptap/react";
 import { ChangeEvent, useCallback, useRef } from "react";
 import Tippy from "@tippyjs/react";
-import "./index.css";
 import { useParams } from "react-router-dom";
 import { uploadImgInPad } from "../../services/pad";
 import { messageError } from "../Message";
 import { getImgUrl } from "../../services/fileAvt";
+import FontFamilySl from "../../containers/TipTapTools/FontFamilySl";
+
+import "./index.css";
 
 interface IMenuBar {
   editor: Editor;
@@ -229,6 +231,7 @@ export const MenuBar = ({ editor }: IMenuBar) => {
   if (!editor) return null;
   return (
     <div className="toolbar">
+      <FontFamilySl editor={editor} />
       {menus.map((group, i) => {
         // check group tool
         return group[0]?.title ? (

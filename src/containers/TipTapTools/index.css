@@ -1,0 +1,5 @@
+.select-btn {
+    @apply p-1 rounded-md;
+    @apply border border-gray-400;
+    @apply focus:outline-none;
+}
