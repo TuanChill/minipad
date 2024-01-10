@@ -97,8 +97,8 @@ export default function DocumentList() {
         <li
           key={pad.id}
           onClick={() => openPadEditor(pad)}
-          className={`relative bg-white py-5 px-4 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 cursor-pointer ${
-            id == pad.id && "bg-slate-400"
+          className={`relative py-5 px-4 hover:bg-gray-200 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 cursor-pointer ${
+            id == pad.id ? "bg-slate-300" : "bg-white"
           }`}
         >
           <div className="flex justify-between space-x-3">

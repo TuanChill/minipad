@@ -18,6 +18,9 @@ import { saveContentById } from "../../services/pad";
 
 import "./index.css";
 import "./editor.css";
+import { encryptPad } from "../../libs/crypt";
+import FontFamily from "@tiptap/extension-font-family";
+import TextStyle from "@tiptap/extension-text-style";
 
 interface IPadEditor {
   id: string;
@@ -45,6 +48,8 @@ const extensions = [
     types: ["heading", "paragraph"],
   }),
   Underline,
+  FontFamily,
+  TextStyle,
 ];
 
 export default function PadEditor({ id, uid, content }: IPadEditor) {
@@ -57,6 +62,7 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
       attributes: {
         class:
           "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none m-auto",
+          FontFamily: "Arial"
       },
     },
     content: content,
@@ -74,16 +80,19 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
 
       // debounce
       timer = setTimeout(async () => {
+        // encrypt content
+        //save content
         const html = editor.getHTML();
-        if (uid) {
-          await saveContentById({
-            uid,
-            id,
-            content: html,
-          });
-        }
+        const cipherText = encryptPad(html, uid);
+        // console.log(html);
+        // console.log(cipherText);
+        await saveContentById({
+          uid,
+          id,
+          content: cipherText,
+        });
         // update pad to db here
-      }, 2000) as unknown as string;
+      }, 800) as unknown as string;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [update]);
@@ -93,9 +102,9 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
     if (editor) {
       // editor.commands.clearContent();
       editor.commands.setContent(content);
-      setTimeout(() => {
-        editor.commands.focus();
-      }, 200);
+      // setTimeout(() => {
+      //   editor.commands.focus();
+      // }, 200);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, id]);
@@ -113,7 +122,12 @@ export default function PadEditor({ id, uid, content }: IPadEditor) {
         {editor && <MenuBar editor={editor} />}
         <TittlePad isEdit={true} />
       </div>
-      <EditorContent editor={editor} className="tiptap-main-content" />
+      <div
+        onClick={() => editor?.commands.focus()}
+        className="tiptap-main-content"
+      >
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }
