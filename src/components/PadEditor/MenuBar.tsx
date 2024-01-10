@@ -16,8 +16,6 @@ interface IMenuBar {
 interface MenuItemWithTitle {
   icon: string;
   title: true; // Indicate that title is present
-  onClick: () => void;
-  isActive: string;
   description: string;
 }
 
@@ -113,8 +111,12 @@ export const MenuBar = ({ editor }: IMenuBar) => {
     ],
     [
       {
-        icon: "h-1",
+        icon: "heading",
         title: true,
+        description: "Chuyển đổi định dạng tiêu đề",
+      },
+      {
+        icon: "h-1",
         onClick: () => getFocus().toggleHeading({ level: 1 }).run(),
         isActive: isActive("heading", { level: 1 }),
         description: "Chuyển đổi định dạng tiêu đề cấp 1",
@@ -136,6 +138,10 @@ export const MenuBar = ({ editor }: IMenuBar) => {
       {
         icon: "align-left",
         title: true,
+        description: "Căn chỉnh văn bản",
+      },
+      {
+        icon: "align-left",
         onClick: () => getFocus().setTextAlign("left").run(),
         isActive: isActive("", { textAlign: "left" }),
         description: "Căn chỉnh văn bản vào bên trái",
@@ -163,6 +169,10 @@ export const MenuBar = ({ editor }: IMenuBar) => {
       {
         icon: "list-unordered",
         title: true,
+        description: "Định dạng danh sách dấu đầu dòng",
+      },
+      {
+        icon: "list-unordered",
         onClick: () => getFocus().toggleBulletList().run(),
         isActive: isActive("bulletList"),
         description: "Định dạng danh sách dấu đầu dòng",
@@ -184,7 +194,7 @@ export const MenuBar = ({ editor }: IMenuBar) => {
       {
         icon: "separator",
         onClick: () => getFocus().setHorizontalRule().run(),
-        isActive: "",
+        isActive: " ",
         description: "Chèn đường kẻ ngang",
       },
       {
@@ -216,13 +226,13 @@ export const MenuBar = ({ editor }: IMenuBar) => {
       {
         icon: "image-line",
         onClick: () => addImg(),
-        isActive: "",
+        isActive: " ",
         description: "Chèn hình ảnh",
       },
       {
         icon: "youtube-line",
         onClick: addYoutube,
-        isActive: "",
+        isActive: " ",
         description: "Chèn video youtube",
       },
     ],
@@ -238,28 +248,28 @@ export const MenuBar = ({ editor }: IMenuBar) => {
           <div key={i} className="">
             <Tippy
               interactive={true}
+              delay={100}
               placement="bottom"
               content={
                 <div className="flex flex-col p-1 rounded-md gap-2 bg-white shadow-md">
-                  {group.map((e) => (
-                    <button
-                      key={e.icon}
-                      className={`btn-item hover:bg-slate-200 ${e?.isActive}`}
-                      onClick={async () => {
-                        await editor.commands.focus();
-                        e.onClick;
-                      }}
-                    >
-                      <i className={`ri-${e.icon}`}></i>
-                    </button>
-                  ))}
+                  {group.map((e) => {
+                    if (!e?.title) {
+                      // console.log(e)
+                      return (
+                        <button
+                          key={e.icon}
+                          className={`btn-item ${e.isActive}`}
+                          onClick={e?.onClick}
+                        >
+                          <i className={`ri-${e.icon}`}></i>
+                        </button>
+                      );
+                    }
+                  })}
                 </div>
               }
             >
-              <button
-                key={group[0].icon}
-                className={`btn-item ${group[0]?.isActive}`}
-              >
+              <button key={group[0].icon} className={`btn-item`}>
                 <i className={`ri-${group[0].icon}`}></i>
               </button>
             </Tippy>
@@ -267,30 +277,31 @@ export const MenuBar = ({ editor }: IMenuBar) => {
         ) : (
           <div key={i} className="group-item">
             {group.map((item) => {
-              return (
-                <Tippy
-                  key={item.icon}
-                  interactive={true}
-                  placement="bottom"
-                  content={
-                    <>
-                      {item.description && (
-                        <span className="bg-gray-300 p-2 rounded-md text-black">
-                          {item?.description}
-                        </span>
-                      )}
-                    </>
-                  }
-                >
-                  <button
+              if (!item.title)
+                return (
+                  <Tippy
                     key={item.icon}
-                    className={`btn-item ${item?.isActive}`}
-                    onClick={item.onClick}
+                    interactive={true}
+                    placement="bottom"
+                    content={
+                      <>
+                        {item.description && (
+                          <span className="bg-gray-300 p-2 rounded-md text-black">
+                            {item?.description}
+                          </span>
+                        )}
+                      </>
+                    }
                   >
-                    <i className={`ri-${item.icon}`}></i>
-                  </button>
-                </Tippy>
-              );
+                    <button
+                      key={item.icon}
+                      className={`btn-item ${item?.isActive}`}
+                      onClick={item?.onClick}
+                    >
+                      <i className={`ri-${item.icon}`}></i>
+                    </button>
+                  </Tippy>
+                );
             })}
           </div>
         );

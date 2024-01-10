@@ -52,7 +52,8 @@
 .btn-item {
     @apply px-3 py-2 rounded-md;
     /* @apply bg-gray-600; */
-    @apply border border-gray-400
+    @apply border border-gray-400;
+    @apply hover:bg-slate-200;
 }
 
 .btn-item.is-active {
