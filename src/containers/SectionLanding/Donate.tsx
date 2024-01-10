@@ -9,7 +9,7 @@ export default function Donate() {
       <div className="flex flex-col items-center mt-6">
         <img
           className="max-w-[250px]"
-          src="https://firebasestorage.googleapis.com/v0/b/notion-6958d.appspot.com/o/avatars%2Fdonate.jpg?alt=media&token=186dcd62-2cb6-4a0a-8e5d-174072cf7a30"
+          src="/donate.jpg"
           alt="momo"
         />
         <a className="mt-2 text-blue-500 underline" href="https://me.momo.vn/G9IwTNsRuVC3C9u2CeiyIb">Momo</a>
