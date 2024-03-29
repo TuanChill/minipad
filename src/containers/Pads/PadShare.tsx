@@ -3,8 +3,9 @@ import PadContent from "../../components/PadEditor/PadContent";
 import { useEffect, useState } from "react";
 import { IPad, getPadById } from "../../services/pad";
 import TitlePadShare from "../../layouts/ShareView/TitlePadShare";
-import LoadingIndicator from "../../components/Loading/LoadingIndicator";
+// import LoadingIndicator from "../../components/Loading/LoadingIndicator";
 import { decryptPad } from "../../libs/crypt";
+import GojoLoading from "../../components/Loading/GojoLoading";
 
 export default function PadShare() {
   const { uid, id } = useParams();
@@ -59,6 +60,6 @@ export default function PadShare() {
       </div>
     )
   ) : (
-    <LoadingIndicator className="w-full h-full" />
+    <GojoLoading className="w-full h-full" />
   );
 }

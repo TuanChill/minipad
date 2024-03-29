@@ -3,8 +3,10 @@ import PadEditor from "../../components/PadEditor";
 import { useEffect, useState } from "react";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { IPad, getPadById } from "../../services/pad";
-import LoadingIndicator from "../../components/Loading/LoadingIndicator";
+// import LoadingIndicator from "../../components/Loading/LoadingIndicator";
+
 import { decryptPad } from "../../libs/crypt";
+import GojoLoading from "../../components/Loading/GojoLoading";
 
 export default function PadContainer() {
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ export default function PadContainer() {
       {id && user?.uid && pad ? (
         <div className="w-full h-full">
           {isLoading ? (
-            <LoadingIndicator className="w-full h-full opacity-50" />
+            <GojoLoading className="w-full h-full" />
           ) : (
             <PadEditor
               id={id}
