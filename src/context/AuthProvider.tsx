@@ -32,7 +32,6 @@ export default function AuthProvider({ children }: AuthenProviderProps) {
   useEffect(() => {
     // observer auth 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         setAuthInfo({
           user: {
