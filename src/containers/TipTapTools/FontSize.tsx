@@ -25,9 +25,9 @@ export default function FontSize({ editor }: { editor: Editor }) {
         delay={200}
         offset={[0, 5]}
         content={
-          <div className="flex flex-col shadow-lg w-10 items-center rounded">
+          <div className="flex flex-col shadow-lg w-10 items-center rounded overflow-hidden">
             {fontSizeList.map((val, i) => (
-              <span onClick={() => changeFontSize(val)} className="hover:bg-gray-100 w-full py-1 bg-gray-300 text-center" key={i}>{val}</span>
+              <span onClick={() => changeFontSize(val)} className="hover:bg-gray-400 w-full py-1 bg-gray-200 text-center cursor-pointer" key={i}>{val}</span>
             ))}
           </div>
         }
