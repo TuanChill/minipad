@@ -21,6 +21,7 @@ import "./editor.css";
 import { encryptPad } from "../../libs/crypt";
 import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
+import { FontSize } from "../../containers/ExtensionTipTap/FontSize";
 
 interface IPadEditor {
   id: string;
@@ -49,6 +50,7 @@ const extensions = [
   }),
   Underline,
   FontFamily,
+  FontSize,
   TextStyle,
 ];
 

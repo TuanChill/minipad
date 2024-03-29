@@ -8,6 +8,7 @@ import { getImgUrl } from "../../services/fileAvt";
 import FontFamilySl from "../../containers/TipTapTools/FontFamilySl";
 
 import "./index.css";
+import FontSize from "../../containers/TipTapTools/FontSize";
 
 interface IMenuBar {
   editor: Editor;
@@ -242,6 +243,7 @@ export const MenuBar = ({ editor }: IMenuBar) => {
   return (
     <div className="toolbar">
       <FontFamilySl editor={editor} />
+      <FontSize  editor={editor}/>
       {menus.map((group, i) => {
         // check group tool
         return group[0]?.title ? (
