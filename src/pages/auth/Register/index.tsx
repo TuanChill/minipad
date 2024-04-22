@@ -5,12 +5,10 @@ import { Button } from "../../../components/Button";
 import InputControl from "../../../components/Controls/Input";
 import { UserSchema } from "../../../containers/UserSchema";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithGg, signUp } from "../../../services/sign";
+import {  signUp } from "../../../services/sign";
 import ToggleShowPassword from "../../../components/ToggleShowPassword";
 import { useState } from "react";
-import { createUser } from "../../../services/users";
-import { messageError, messageSuccess } from "../../../components/Message";
-import { toTimestamp } from "../../../utils/date";
+import { messageSuccess } from "../../../components/Message";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -58,43 +56,10 @@ export default function Register() {
     },
   });
 
-  const contWithGg = async () => {
-    const user = await signInWithGg();
-    //  if create user authen successfully. save user info in doc
-    if (user) {
-      const { uid, photoURL, email, fullName , createAt } = user;
-      try {
-        await createUser({
-          uid: uid,
-          email,
-          photoURL,
-          fullName,
-          phoneNumber: "",
-          dateOfBirth: toTimestamp(new Date()),
-          createAt,
-          updateAt: toTimestamp(new Date()),
-        });
-        messageSuccess("Đăng ký thành công");
-        navigate("/app/pad")
-      } catch (error) {
-        messageError("Đã có lỗi xảy ra. Vui lòng thử lại")
-        console.log(error);
-      }
-    }
-  };
-
   return (
     <div className="wrapper">
       <h1 className="text-5xl text-center font-bold mb-8">Đăng Ký</h1>
       <form className="form-container">
-        <div className="login-social">
-          <Button
-            iconLeft={<i className="ri-google-fill mr-1"></i>}
-            text="Đăng nhập với Google"
-            className="w-full font-semibold"
-            onClick={contWithGg}
-          />
-        </div>
         <InputControl
           title="Email"
           name="email"

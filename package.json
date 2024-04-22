@@ -30,6 +30,7 @@
     "@tiptap/starter-kit": "^2.1.7",
     "@types/crypto-js": "^4.2.1",
     "@types/uuid": "^9.0.7",
+    "axios": "^1.6.8",
     "crypto-js": "^4.2.0",
     "firebase": "^10.3.0",
     "formik": "^2.4.3",
