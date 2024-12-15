@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PadEditor from "../../components/PadEditor";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { IPad, getPadById } from "../../services/pad";
 import LoadingIndicator from "../../components/Loading/LoadingIndicator";
@@ -42,7 +42,7 @@ export default function PadContainer() {
   };
 
   return (
-    <>
+    <React.Fragment>
       {id && user?.uid && pad ? (
         <div className="w-full h-full">
           {isLoading ? (
@@ -56,6 +56,6 @@ export default function PadContainer() {
           )}
         </div>
       ) : null}
-    </>
+    </React.Fragment>
   );
 }

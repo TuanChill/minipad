@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react";
-import { ChangeEvent, useCallback, useRef } from "react";
+import React, { ChangeEvent, useCallback, useRef } from "react";
 import Tippy from "@tippyjs/react";
 import { useParams } from "react-router-dom";
 import { uploadImgInPad } from "../../services/pad";
@@ -286,13 +286,13 @@ export const MenuBar = ({ editor }: IMenuBar) => {
                     interactive={true}
                     placement="bottom"
                     content={
-                      <>
+                      <React.Fragment>
                         {item.description && (
                           <span className="bg-gray-300 p-2 rounded-md text-black">
                             {item?.description}
                           </span>
                         )}
-                      </>
+                      </React.Fragment>
                     }
                   >
                     <button
