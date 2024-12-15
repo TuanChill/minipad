@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom"
 
 export default function SectionScroll({children} : {
@@ -13,8 +13,8 @@ export default function SectionScroll({children} : {
         }
     }, [location])
   return (
-    <>
+    <React.Fragment>
         {children}
-    </>
+    </React.Fragment>
   )
 }
