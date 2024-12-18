@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { auth } from "../../../libs/firebase";
 import { useNavigate } from "react-router-dom";
 import { rmAuthCache } from "../../../containers/localAuth";
@@ -21,5 +21,5 @@ export default function Logout() {
     );
   }, [navigate]);
 
-  return <></>;
+  return <React.Fragment></React.Fragment>;
 }

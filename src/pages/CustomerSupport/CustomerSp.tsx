@@ -40,19 +40,17 @@ export default function CustomerSp() {
       ContactForm.validate(values, { abortEarly: false })
         .then(() => {
           setDisable(true);
-          // send email
-          if (form.current) {
-            sendEmail(form.current)
-              .then(() => {
-                messageSuccess("Gửi Email thành công");
-                setDisable(false);
-              })
-              .catch((err) => {
-                messageError("Gửi Email thất bại");
-                console.log(err);
-                setDisable(false);
-              });
-          }
+          // send email using formik values
+          sendEmail(values.user_email, values.user_name, values.message)
+            .then(() => {
+              messageSuccess("Gửi Email thành công");
+              setDisable(false);
+            })
+            .catch((err) => {
+              messageError("Gửi Email thất bại");
+              console.log(err);
+              setDisable(false);
+            });
         })
         .catch((err) => {
           if (!err.inner.length) return;
